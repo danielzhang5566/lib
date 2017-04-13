@@ -1,0 +1,39 @@
+html {
+    box-sizing: border-box;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: url("../img/test.jpg");
+}
+
+h1, h2, h3, h4, h5, h6, p, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/*先声明 WebFont*/
+@font-face {
+    font-family: 'zhanku';
+    src: url('../font/zhanku.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*使用选择器指定字体*/
+.font {
+    font-family: 'zhanku';
+    font-size: 25px;
+    color: white;
+}
+
+.img {
+    width: 600px;
+}
