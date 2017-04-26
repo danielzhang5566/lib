@@ -6,7 +6,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')//抽离css
 
 module.exports = {
     entry: {
-        app: './src/js/app.js',
+        index: './src/js/index.js',
     },//入口文件
     output: {
         path: path.resolve(__dirname, 'dist'),//打包后的文件存放的地方
@@ -53,14 +53,15 @@ module.exports = {
                 collapseWhitespace: true,//移除空格
             },
             chunks: [
-                'app'
-            ]//只选择加载入口文件 app.js
+                'index'
+            ]//只选择加载入口文件 index.js
         }),
     ],
     devServer: {
         contentBase: path.resolve(__dirname, 'dist'),//本地服务器所加载的页面所在的目录
         historyApiFallback: true,//不跳转
         inline: true,//实时刷新
+        host:'0.0.0.0',//局域网调试
         port: 8080
     }
 }
