@@ -7,6 +7,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')//抽离css
 module.exports = {
     entry: {
         index: './src/js/index.js',
+        home: './src/js/home.js'
     },//入口文件
     output: {
         path: path.resolve(__dirname, 'dist'),//打包后的文件存放的地方
@@ -56,6 +57,32 @@ module.exports = {
                 'index'
             ]//只选择加载入口文件 index.js
         }),
+        new HtmlWebpackPlugin({                      //插入css/js标签生成最终html
+            favicon: './src/favicon.ico',
+            filename: 'home.html',
+            template: './src/home.html',
+            hash: true,//静态资源后加hash
+            minify: {
+                removeComments: true,//移除注释
+                collapseWhitespace: true,//移除空格
+            },
+            chunks: [
+                'home'
+            ]//只选择加载入口文件 home.js
+        }),
+        new HtmlWebpackPlugin({                      //插入css/js标签生成最终html
+            favicon: './src/favicon.ico',
+            filename: 'pc.html',
+            template: './src/pc.html',
+            hash: true,//静态资源后加hash
+            minify: {
+                removeComments: true,//移除注释
+                collapseWhitespace: true,//移除空格
+            },
+            chunks: [
+
+            ]//无需加载js
+        })
     ],
     devServer: {
         contentBase: path.resolve(__dirname, 'dist'),//本地服务器所加载的页面所在的目录
