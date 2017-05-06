@@ -83,6 +83,10 @@ input[type="button"], input[type="submit"], input[type="reset"] {
     border-radius: 10px;
 }
 
+.login-waiting {
+    background: #919191;
+}
+
 [data-dpr="2"] .login-input {
     font-size: 32px;
 }
