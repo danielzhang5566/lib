@@ -3,7 +3,6 @@ var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')//导出HTML
 var ExtractTextPlugin = require('extract-text-webpack-plugin')//抽离css
 
-
 module.exports = {
     entry: {
         index: './src/js/index.js',
@@ -27,7 +26,7 @@ module.exports = {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: [
                     'url-loader?limit=10000&name=./img/[name].[ext]',
-                    'image-webpack-loader?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-80", speed: 4}, mozjpeg: {quality: 70}}'
+                    'image-webpack-loader?{optimizationLevel: 5, interlaced: false, pngquant:{quality: "55-70", speed: 4}, mozjpeg: {quality: 60}}'
                 ]
             },//处理图片
             {
@@ -42,9 +41,9 @@ module.exports = {
             compress: {
                 warnings: false
             },
-            except: ['$super', '$', 'exports', 'require']//排除关键字
+            except: ['Swiper', '$super', '$', 'exports', 'require']//排除关键字
         }),
-        new HtmlWebpackPlugin({                      //插入css/js标签生成最终html
+        new HtmlWebpackPlugin({                      //插入css/js标签生成最终index.html
             favicon: './src/favicon.ico',
             filename: 'index.html',
             template: './src/index.html',
@@ -57,11 +56,12 @@ module.exports = {
                 'index'
             ]//只选择加载入口文件 index.js
         }),
-        new HtmlWebpackPlugin({                      //插入css/js标签生成最终html
+        new HtmlWebpackPlugin({                      //插入css/js标签生成最终home.html
             favicon: './src/favicon.ico',
             filename: 'home.html',
             template: './src/home.html',
             hash: true,//静态资源后加hash
+            inject: 'head',//添加在<head>头部
             minify: {
                 removeComments: true,//移除注释
                 collapseWhitespace: true,//移除空格
@@ -70,7 +70,7 @@ module.exports = {
                 'home'
             ]//只选择加载入口文件 home.js
         }),
-        new HtmlWebpackPlugin({                      //插入css/js标签生成最终html
+        new HtmlWebpackPlugin({                      //插入css/js标签生成最终pc.html
             favicon: './src/favicon.ico',
             filename: 'pc.html',
             template: './src/pc.html',
@@ -79,16 +79,14 @@ module.exports = {
                 removeComments: true,//移除注释
                 collapseWhitespace: true,//移除空格
             },
-            chunks: [
-
-            ]//无需加载js
+            chunks: []//无需加载js
         })
     ],
     devServer: {
         contentBase: path.resolve(__dirname, 'dist'),//本地服务器所加载的页面所在的目录
         historyApiFallback: true,//不跳转
         inline: true,//实时刷新
-        host:'0.0.0.0',//局域网调试
+        host: '0.0.0.0',//局域网调试
         port: 8080
     }
 }

@@ -1,0 +1,169 @@
+html, body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+@font-face {
+    font-family: abc;
+    src: url('../font/zhanku.ttf') format('truetype');
+}
+
+.font-abc {
+    font-family: abc, sans-serif;
+    color: #232323;
+    font-size: 22px;
+    opacity: 0;
+    animation: font-abc 1s linear;
+    -webkit-animation: font-abc 1s linear;
+    display: none;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+}
+
+.font-abc span {
+    color: #ce1313;
+    font-size: 28px;
+    font-weight: 100;
+}
+
+[data-dpr="2"] .font-abc {
+    font-size: 46px;
+}
+
+[data-dpr="2"] .font-abc span {
+    font-size: 56px;
+}
+
+[data-dpr="3"] .font-abc {
+    font-size: 48px;
+}
+
+[data-dpr="3"] .font-abc span {
+    font-size: 60px;
+}
+
+/*文字统一定位*/
+.font-position {
+    position: absolute;
+    left: 0.5rem;
+    top: 1rem;
+    padding-right: 0.5rem;
+}
+
+@keyframes font-abc {
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes font-abc {
+    100% {
+        opacity: 1;
+    }
+}
+
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-content {
+    position: relative;
+}
+
+.swiper-container-vertical>.swiper-pagination-bullets {
+    display: none;
+    right: 0.33rem;
+    top: 48%;
+}
+
+.swiper-container-vertical>.swiper-pagination-bullets .swiper-pagination-bullet {
+    background: #b28947;
+    opacity: .4;
+    width: 0.25rem;
+    height: 0.25rem;
+    margin: 0.1rem 0;
+}
+
+.swiper-container-vertical>.swiper-pagination-bullets .swiper-pagination-bullet-active {
+    background: #b28947;
+    opacity: 1;
+}
+
+/*1.欢迎页*/
+.slide1 {
+    background: url('../img/bg1_welcome.png') 0 0;
+    background-size: 100% 100%;
+}
+
+.font-welcome {
+
+}
+
+/*2.第一次来到图书馆*/
+.slide2 {
+    background: url('../img/bg2_firsttime.png') 0 0;
+    background-size: 100% 100%;
+}
+
+.font-firsttime {
+
+}
+
+/*3.借的第一本书*/
+.slide3 {
+    background: url('../img/bg3_firstbook.png') 0 0;
+    background-size: 100% 100%;
+}
+
+.font-firstbook {
+
+}
+
+/*4.借阅总量*/
+.slide4 {
+    background: url('../img/bg4_total.png') 0 0;
+    background-size: 100% 100%;
+}
+
+.font-total {
+
+}
+
+/*5.借阅清单*/
+.slide5 {
+    background: url('../img/bg.png') 0 0;
+    background-size: 100% 100%;
+}
+
+/*6.借阅兴趣*/
+.slide6 {
+    background: url('../img/bg6_interest.png') 0 0;
+    background-size: 100% 100%;
+}
+
+.font-interest {
+
+}
+
+/*7.借的最后一本书*/
+.slide7 {
+    background: url('../img/bg7_lastbook.png') 0 0;
+    background-size: 100% 100%;
+}
+
+.font-lastbook {
+
+}
+
+/*8.结语*/
+.slide8 {
+    background: url('../img/bg8_final.png') 0 0;
+    background-size: 100% 100%;
+}
+
+.font-final {
+
+}
+
