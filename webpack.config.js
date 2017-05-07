@@ -26,7 +26,11 @@ module.exports = {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: [
                     'url-loader?limit=10000&name=./img/[name].[ext]',
-                    'image-webpack-loader?{optimizationLevel: 5, interlaced: false, pngquant:{quality: "55-70", speed: 4}, mozjpeg: {quality: 60}}'
+                    //https://github.com/tcoopman/image-webpack-loader
+                    //第一个optimizationLevel为png图片优化等级,从1到7,等级越高,图片优化程度越好,但是打包所需时间就会越长
+                    //第二个optimizationLevel为gif图片优化等级,从1到3
+                    //interlaced是隔行扫描,运行客户端加载图片时先看到模糊的一部分
+                    'image-webpack-loader?{optimizationLevel: 5, interlaced: false, pngquant:{quality: "55-70", speed: 4}, mozjpeg: {quality: 60},gifsicle:{optimizationLevel: 3}}'
                 ]
             },//处理图片
             {
