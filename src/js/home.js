@@ -1,5 +1,6 @@
 require('../css/home.css')
 require('../font/zhanku.ttf')
+require('../img/book_loading.gif')
 require('../img/bg.png')
 require('../img/bg1_welcome.png')
 require('../img/bg2_firsttime.png')
@@ -8,7 +9,7 @@ require('../img/bg4_total.png')
 require('../img/bg6_interest.png')
 require('../img/bg7_lastbook.png')
 require('../img/bg8_final.png')
-require('../img/book_loading.gif')
+require('../img/arrow.png')
 
 var God = {
     init: function () {

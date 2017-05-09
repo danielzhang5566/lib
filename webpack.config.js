@@ -25,7 +25,7 @@ module.exports = {
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: [
-                    'url-loader?limit=10000&name=./img/[name].[ext]',
+                    'url-loader?limit=10240&name=./img/[name].[ext]',
                     //https://github.com/tcoopman/image-webpack-loader
                     //第一个optimizationLevel为png图片优化等级,从1到7,等级越高,图片优化程度越好,但是打包所需时间就会越长
                     //第二个optimizationLevel为gif图片优化等级,从1到3

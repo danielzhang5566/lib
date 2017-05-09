@@ -11,24 +11,25 @@ html, body {
 
 .font-abc {
     font-family: abc, sans-serif;
-    color: #232323;
-    font-size: 22px;
+    color: #1a1a1a;
+    font-size: 44px;
+    line-height: 76px;
     opacity: 0;
-    animation: font-abc 1s linear;
-    -webkit-animation: font-abc 1s linear;
+    animation: font-animation 1s linear;
+    -webkit-animation: font-animation 1s linear;
     display: none;
     animation-fill-mode: forwards;
     -webkit-animation-fill-mode: forwards;
 }
 
 .font-abc span {
-    color: #ce1313;
-    font-size: 28px;
+    color: #bf1a16;
+    font-size: 56px;
     font-weight: 100;
 }
 
 .progress {
-    color: #ce1313;
+    color: #bf1a16;
     font-size: 34px;
 }
 
@@ -37,7 +38,7 @@ html, body {
 }
 
 [data-dpr="2"] .font-abc span {
-    font-size: 56px;
+    font-size: 58px;
 }
 
 [data-dpr="2"] .progress {
@@ -49,33 +50,31 @@ html, body {
 }
 
 [data-dpr="3"] .font-abc span {
-    font-size: 60px;
+    font-size: 62px;
 }
 
 [data-dpr="3"] .progress {
     font-size: 60px;
 }
 
-
-
-/*文字统一定位*/
+/*文字默认定位*/
 .font-position {
     position: absolute;
-    left: 0.5rem;
-    top: 1rem;
-    padding-right: 0.5rem;
+    left: 1.388rem;
+    top: 3.777rem;
+    padding-right: 1.388rem;
 }
 
-@keyframes font-abc {
-    100% {
-        opacity: 1;
-    }
+[data-dpr="2"] .font-position {
+    left: 0.666rem;
+    top: 1.813rem;
+    padding-right: 0.666rem;
 }
 
-@-webkit-keyframes font-abc {
-    100% {
-        opacity: 1;
-    }
+[data-dpr="3"] .font-position {
+    left: .402rem;
+    top: 1.095rem;
+    padding-right: .402rem;
 }
 
 .swiper-container {
@@ -125,18 +124,39 @@ html, body {
 
 .loading-content .progress {
     position: absolute;
+    display: block !important;
     top: 10rem;
-    left: 4rem;
 }
 
 /*1.欢迎页*/
 .slide1 {
     background: url('../img/bg1_welcome.png') 0 0;
     background-size: 100% 100%;
+    text-align: center;
 }
 
 .font-welcome {
+    left: auto !important;
+    top: auto !important;
+    bottom: 3.6rem;
+    width: 100%;
+}
 
+[data-dpr="2"] .font-welcome {
+    bottom: 1.6rem;
+}
+
+[data-dpr="3"] .font-welcome {
+    bottom: 1rem;
+}
+
+.arrow {
+    position: absolute;
+    bottom: .1rem;
+    width: .833rem;
+    height: .277rem;
+    animation: arrow-animation 1.2s linear infinite;
+    -webkit-animation: arrow-animation 1.2s linear infinite;
 }
 
 /*2.第一次来到图书馆*/
@@ -146,7 +166,9 @@ html, body {
 }
 
 .font-firsttime {
-
+    left: auto !important;
+    right: 0 !important;
+    text-align: right;
 }
 
 /*3.借的第一本书*/
@@ -203,5 +225,33 @@ html, body {
 
 .font-final {
 
+}
+
+/*** CSS动效 ***/
+
+/*字体*/
+@keyframes font-animation {
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes font-animation {
+    100% {
+        opacity: 1;
+    }
+}
+
+/*箭头*/
+@keyframes arrow-animation {
+    100% {
+        bottom: 15px;
+    }
+}
+
+@-webkit-keyframes arrow-animation {
+    100% {
+        bottom: 15px;
+    }
 }
 
