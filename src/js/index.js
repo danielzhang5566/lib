@@ -15,7 +15,7 @@ window.onload = function () {
         var sno = document.querySelector('#sno').value.trim();
         var sname = document.querySelector('#sname').value.trim();
 
-        if ((/^\d{10}$/.test(sno)) && (/^[a-zA-Z\u4e00-\u9fa5]+$/.test(sname))) {
+        if ((/^\d{10,11}$/.test(sno)) && (/^[a-zA-Z\u4e00-\u9fa5]+$/.test(sname))) {
             console.log('check ok');
             var param = 'uid=' + sno + '&name=' + sname + '&cmd=login';
 
