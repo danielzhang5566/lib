@@ -62,6 +62,8 @@ var God = {
                 }
             }
         });
+
+        console.log('初始化页面成功')
     },
 
     //设置全屏
@@ -96,7 +98,8 @@ var God = {
     loadImg: function () {
         var imgList = ['bg1_welcome.png', 'bg2_firsttime.png', 'bg3_firstbook.png', 'bg4_total.png', 'bg6_interest.png', 'bg7_lastbook.png', 'bg8_final.png'];
 
-        var server = window.location.origin,
+        var imgLocation = 'http://source.igdut.cn/',
+            //imgLocation = window.location.origin + '/img/',
             $loading = $('.loading-content'),
             $progress = $('.progress'),
             $pagination = $('.swiper-pagination-bullets'),
@@ -105,13 +108,14 @@ var God = {
 
         for (var i = 0; i < len; i++) {
             var oneImg = new Image();
-            oneImg.src = server + '/img/' + imgList[i];
+            oneImg.src = imgLocation + imgList[i];
             oneImg.onload = function () {
                 successCount++;
                 $progress.innerHTML = Math.floor(successCount / len * 100) + '%';
 
                 //所有图片成功加载
                 if (successCount == len) {
+                    console.log('所有图片预加载成功')
                     //隐藏加载元素(显示欢迎页)
                     $loading.style.display = 'none';
                     //显示右边导航栏
@@ -132,7 +136,6 @@ var God = {
         var me = this;
 
         me.ajax('POST', 'cmd=getinfo', './easy.php', function (data) {
-            console.log(data);
             switch (data.code) {
                 case 0:
                     me.showModal('未能获取到信息，请返回重新登录。');
