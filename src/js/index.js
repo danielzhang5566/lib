@@ -20,40 +20,7 @@ window.onload = function () {
             var param = 'uid=' + sno + '&name=' + sname + '&cmd=login';
 
             if (sno[3] == '6' || sno[3] == '5' || sno[3] == '4' || sno[3] == '3') {
-                ajax(param);
-            } else {
-                showModal('抱歉，本纪念册仅向在读本科生开放。');
-                changeLoginBtn();
-            }
-
-        } else {
-            showModal('您输入的姓名或学号格式有误,请检查后重新输入~');
-            changeLoginBtn();
-        }
-
-    })
-
-    function showModal(str) {
-        return window.confirm(str);
-    }
-
-    function changeLoginBtn() {
-        if (loginBtn.className == 'login-submit login-waiting') {
-            loginBtn.className = 'login-submit';
-            loginBtn.setAttribute('value', '登录')
-        } else {
-            loginBtn.className = 'login-submit login-waiting';
-            loginBtn.setAttribute('value', '登录中...')
-        }
-    }
-
-    function ajax(param) {
-
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4) {
-                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-                    var data = JSON.parse(xhr.responseText);
+                ajax('POST', param, './easy.php', function (data) {
                     switch (data.code) {
                         case -3:
                             console.log('已登录');
@@ -80,6 +47,53 @@ window.onload = function () {
                             changeLoginBtn();
                             break;
                     }
+                });
+            } else {
+                showModal('抱歉，本纪念册仅向在读本科生开放。');
+                changeLoginBtn();
+            }
+
+        } else {
+            showModal('您输入的姓名或学号格式有误,请检查后重新输入~');
+            changeLoginBtn();
+        }
+
+    })
+
+    function showModal(str) {
+        return window.alert(str);
+    }
+
+    function changeLoginBtn() {
+        if (loginBtn.className == 'login-submit login-waiting') {
+            loginBtn.className = 'login-submit';
+            loginBtn.setAttribute('value', '登录')
+        } else {
+            loginBtn.className = 'login-submit login-waiting';
+            loginBtn.setAttribute('value', '登录中...')
+        }
+    }
+
+    /**
+     * 封装的ajax
+     * @param  {String}  method    请求类型
+     * @param  {String}  param     请求参数(没有请传null)
+     * @param  {String}  url       请求地址
+     * @param  {Function}  callback  请求成功后执行的回调函数(可选)
+     * @return {Object}  无
+     */
+    function ajax(method, param, url, callback) {
+        var me = this,
+            method = method || 'GET',
+            param = param || null,
+            url = url || '';
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                    var data = JSON.parse(xhr.responseText);
+                    callback && callback(data);
                 } else {
                     showModal('A2:出错啦~请稍后登录呗~');
                     console.log('There was a problem with the request--status code:' + xhr.status);
@@ -93,10 +107,14 @@ window.onload = function () {
             location.reload();
         };
 
-        xhr.open('POST', 'http://api.lib.b612.me/easy.php', true);
-        // 设置 Content-Type 为 application/x-www-form-urlencoded
-        // 以表单的形式传递数据
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.open(method, url, true);
+
+        if (method == 'POST') {
+            // 设置 Content-Type 为 application/x-www-form-urlencoded
+            // 以表单的形式传递数据
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        }
+
         xhr.send(param);
     }
 }
