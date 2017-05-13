@@ -4,6 +4,10 @@ html, body {
     height: 100%;
 }
 
+i {
+    font-style: inherit;
+}
+
 @font-face {
     font-family: abc;
     src: url('../font/zhanku.ttf') format('truetype');
@@ -26,6 +30,10 @@ html, body {
     color: #bf1a16;
     font-size: 56px;
     font-weight: 100;
+}
+
+.default-color {
+    color: #1a1a1a;
 }
 
 .progress {
@@ -195,6 +203,14 @@ html, body {
 .slide5 {
     background: url('../img/bg.png') 0 0;
     background-size: 100% 100%;
+}
+
+.font-borrowlist-title {
+
+}
+
+.font-borrowlist-booklist {
+
 }
 
 /*6.借阅兴趣*/

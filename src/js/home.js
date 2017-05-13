@@ -1,21 +1,22 @@
 require('../css/home.css')
 require('../font/zhanku.ttf')
-require('../img/book_loading.gif')
-require('../img/bg.png')
-require('../img/bg1_welcome.png')
-require('../img/bg2_firsttime.png')
-require('../img/bg3_firstbook.png')
-require('../img/bg4_total.png')
-require('../img/bg6_interest.png')
-require('../img/bg7_lastbook.png')
-require('../img/bg8_final.png')
-require('../img/arrow.png')
+
+//require('../img/book_loading.gif')
+//require('../img/bg.png')
+//require('../img/bg1_welcome.png')
+//require('../img/bg2_firsttime.png')
+//require('../img/bg3_firstbook.png')
+//require('../img/bg4_total.png')
+//require('../img/bg6_interest.png')
+//require('../img/bg7_lastbook.png')
+//require('../img/bg8_final.png')
+//require('../img/arrow.png')
 
 var God = {
     init: function () {
         this.initPage();
         this.loadImg();
-        this.getUserData();
+        this.userData();
         this.music();
     },
 
@@ -26,7 +27,7 @@ var God = {
         me.setPageSize();
 
         //设置Swiper
-        var mySwiper = new Swiper('.swiper-container', {
+        var globalSwiper = new Swiper('.swiper-container', {
             speed: 400,
             direction: "vertical",
             pagination: ".swiper-pagination",
@@ -95,7 +96,7 @@ var God = {
     loadImg: function () {
         var imgList = ['bg1_welcome.png', 'bg2_firsttime.png', 'bg3_firstbook.png', 'bg4_total.png', 'bg6_interest.png', 'bg7_lastbook.png', 'bg8_final.png'];
 
-        var server =  window.location.origin,
+        var server = window.location.origin,
             $loading = $('.loading-content'),
             $progress = $('.progress'),
             $pagination = $('.swiper-pagination-bullets'),
@@ -117,7 +118,7 @@ var God = {
                     $pagination.style.display = 'block';
                 }
             }
-            oneImg.onerror = function() {
+            oneImg.onerror = function () {
                 console.log('Failed to load the image');
                 //隐藏加载元素(显示欢迎页)
                 $loading.style.display = 'none';
@@ -127,8 +128,100 @@ var God = {
         }
     },
 
-    getUserData: function () {
+    userData: function () {
+        var me = this;
 
+        me.ajax('POST', 'cmd=getinfo', './easy.php', function (data) {
+            console.log(data);
+            switch (data.code) {
+                case 0:
+                    me.showModal('未能获取到信息，请返回重新登录。');
+                    console.log('获取失败(未登录等原因)' + data.code + data.msg);
+                    //window.location.pathname = './index.html'
+                    break;
+                case 1:
+                    console.log('获取信息成功');
+                    userType(data.msg);
+                    break;
+                default:
+                    me.showModal('B1:出错啦~请稍后登录呗~');
+                    console.log('遇到未知错误--' + data.code + data.msg);
+                    break;
+            }
+        });
+
+        //判断用户类型(可能会分性别,分学生和教工,分是否读者之星等)
+        var userType = function (msg) {
+
+            //if(info.sex == 1) {
+            //    //切换设计稿\音乐等
+            //}
+            //if(info.type == 'teacher') {
+            //    //切换展示内容\音乐等
+            //}
+
+            fillData(msg);
+        }
+
+        var fillData = function (msg) {
+            //1.先处理一下后台传过来的数据
+
+            var setTime1 = function (time) {
+                var timeArr = time.split('-');
+                return "<span>" + timeArr[0] + "</span>年<span>" + timeArr[1] + "</span>月<span>" + timeArr[2] + "</span>日"
+            }
+
+            var setTime2 = function (time) {
+                var timeArr = time.split('-');
+                return "在<span>" + timeArr[0] + "</span>年的<span>" + timeArr[1] + "</span>月<span>" + timeArr[2] + "</span>日"
+            }
+
+            var setTitle = function (bookcount) {
+                if (bookcount >= 80) {
+                    return '“工大学霸”'
+                } else if (bookcount >= 30) {
+                    return '“热情读者”'
+                } else {
+                    return '"最具潜力读者"'
+                }
+
+            }
+
+            var setReadingList = function (books) {
+                var len = books.length,
+                    pages = Math.ceil(len / 10);
+                for (var i = 1; i <= pages; i++) {
+                    while (len > 0) {
+                        len--;
+                    }
+                }
+
+                var listSwiper = new Swiper('.borrowlist-container', {
+                    direction: "horizontal",
+                    slidesPerView: "auto",
+                    centeredSlides: true,
+                    spaceBetween: 15
+                })
+            }
+
+            //2.然后再填进DOM
+            $('.data1').innerHTML = msg.name;
+            $('.data2').innerHTML = setTime1(msg.entertime);
+            $('.data3').innerHTML = setTime1(msg.firstbooktime);
+            $('.data4').innerHTML = msg.gap;
+            $('.data5').innerHTML = '《' + msg.firstbook + '》';
+            $('.data6').innerHTML = msg.grade;
+            $('.data7').innerHTML = msg.bookcount;
+            $('.data8').innerHTML = Math.round(+msg.rankingrade * 100) + '%';
+            $('.data9').innerHTML = setTitle(msg.bookcount);
+            $('.data10').innerHTML = setReadingList(msg.books);
+            $('.data11').innerHTML = msg.favorite.split(',')[0];
+            $('.data12').innerHTML = msg.bookcount;
+            $('.data13').innerHTML = msg.favorite.split(',')[1];
+            $('.data14').innerHTML = setTime2(msg.lastbooktime);
+            $('.data15').innerHTML = '《' + msg.lastbook + '》';
+
+        }
     },
 
     music: function () {
@@ -137,7 +230,64 @@ var God = {
 
     convertArray: function (arrayLike) {
         return Array.prototype.slice.call(arrayLike, 0);
+    },
+
+    showModal: function (str) {
+        return window.alert(str);
+    },
+
+    /**
+     * 封装的ajax
+     * @param  {String}    method    请求类型
+     * @param  {String}    param     请求参数(没有请传null)
+     * @param  {String}    url       请求地址
+     * @param  {Function}  callback  请求成功后执行的回调函数(可选)
+     * @return {Object}  无
+     */
+    ajax: function (method, param, url, callback) {
+        var me = this,
+            method = method || 'GET',
+            param = param || null,
+            url = url || '';
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                    var data = JSON.parse(xhr.responseText);
+                    callback && callback(data);
+                } else {
+                    me.showModal('A2:出错啦~请稍后登录呗~');
+                    console.log('There was a problem with the request--status code:' + xhr.status);
+                    location.reload();
+                }
+            }
+        }
+        xhr.onerror = function (e) {
+            me.showModal('A3:出错啦~请稍后登录呗~');
+            console.log(e);
+            location.reload();
+        };
+
+        xhr.open(method, url, true);
+
+        if (method == 'POST') {
+            // 设置 Content-Type 为 application/x-www-form-urlencoded
+            // 以表单的形式传递数据
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        }
+
+        xhr.send(param);
     }
+}
+
+/**
+ * 简化选择器
+ * @param  {String} ele 选择元素 ('body')/('#idName')/('.banner a')
+ * @return {Object} 返回匹配的第一个元素对象
+ */
+function $(elem) {
+    return document.querySelector(elem);
 }
 
 //document.body.addEventListener('touchmove',function(e){
@@ -147,12 +297,3 @@ var God = {
 document.addEventListener("DOMContentLoaded", function (event) {
     God.init();
 });
-
-/**
- * 简化选择器
- * @param  {String}  选择元素 ('body')/('#idName')/('.banner a')
- * @return {Object}  返回匹配的第一个元素对象
- */
-function $(elem) {
-    return document.querySelector(elem);
-}
