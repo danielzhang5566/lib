@@ -100,6 +100,7 @@ var God = {
 
         var imgLocation = 'http://source.igdut.cn/',
             //imgLocation = window.location.origin + '/img/',
+            $slide1 = $('.slide1'),
             $loading = $('.loading-content'),
             $progress = $('.progress'),
             $pagination = $('.swiper-pagination-bullets'),
@@ -116,18 +117,30 @@ var God = {
                 //所有图片成功加载
                 if (successCount == len) {
                     console.log('所有图片预加载成功')
-                    //隐藏加载元素(显示欢迎页)
-                    $loading.style.display = 'none';
-                    //显示右边导航栏
-                    $pagination.style.display = 'block';
+                    //延时确保ajax请求及DOM操作完成
+                    setTimeout(function () {
+                        //隐藏加载元素(显示欢迎页)
+                        $loading.style.display = 'none';
+                        //显示右边导航栏
+                        $pagination.style.display = 'block';
+
+                        //激活可向下滑动
+                        $slide1.setAttribute('class', $slide1.getAttribute('class').replace(' swiper-no-swiping', ''));
+                    }, 1000)
                 }
             }
             oneImg.onerror = function () {
                 console.log('Failed to load the image');
-                //隐藏加载元素(显示欢迎页)
-                $loading.style.display = 'none';
-                //显示右边导航栏
-                $pagination.style.display = 'block';
+                //延时确保ajax请求及DOM操作完成
+                setTimeout(function () {
+                    //隐藏加载元素(显示欢迎页)
+                    $loading.style.display = 'none';
+                    //显示右边导航栏
+                    $pagination.style.display = 'block';
+
+                    //激活可向下滑动
+                    $slide1.setAttribute('class', $slide1.getAttribute('class').replace(' swiper-no-swiping', ''));
+                }, 1000)
             }
         }
     },

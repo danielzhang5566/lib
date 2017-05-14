@@ -116,6 +116,9 @@ i {
 /*加载loading*/
 .loading-content {
     position: relative;
+    background: white;
+    height: 100%;
+    width: 100%;
 }
 
 .loading-content .loading-bg {
