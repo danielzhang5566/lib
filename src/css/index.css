@@ -103,3 +103,15 @@ input[type="button"], input[type="submit"], input[type="reset"] {
     font-size: 72px;
 }
 
+/* 为home.html预加载字体(全平台兼容) */
+@font-face {
+    font-family: abc;
+    src: url('http://source.igdut.cn/zhanku.ttf') format('truetype');
+}
+
+.font-abc {
+    font-family: abc, sans-serif;
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
