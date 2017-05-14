@@ -30,7 +30,7 @@ var God = {
         var globalSwiper = new Swiper('.swiper-container', {
             speed: 400,
             direction: "vertical",
-            pagination: ".swiper-pagination",
+            //pagination: ".swiper-pagination",
             onSlideChangeStart: function (swiper) {
                 if (swiper.activeIndex == swiper.slides.length - 1) { //判断滑到了最后一页
 
@@ -50,13 +50,13 @@ var God = {
                 if (swiper.activeIndex != 0) { //滑走第一页
                 }
 
-                if (swiper.activeIndex == 5) { //滑到了第六页
-                    me.convertArray(document.querySelectorAll('.xuexiao4 img')).forEach(function (el) {
+                if (swiper.activeIndex == 4) { //滑到了第五页
+                    me.convertArray($('.borrowlist-container').querySelectorAll('.font-abc')).forEach(function (el) {
                         el.style.display = 'block';
                     });
                 }
-                if (swiper.activeIndex != 5) { //滑走第六页
-                    me.convertArray(document.querySelectorAll('.xuexiao4 img')).forEach(function (el) {
+                if (swiper.activeIndex != 4) { //滑走第五页
+                    me.convertArray($('.borrowlist-container').querySelectorAll('.font-abc')).forEach(function (el) {
                         el.style.display = 'none';
                     });
                 }
@@ -99,11 +99,11 @@ var God = {
         var imgList = ['bg1_welcome.png', 'bg2_firsttime.png', 'bg3_firstbook.png', 'bg4_total.png', 'bg6_interest.png', 'bg7_lastbook.png', 'bg8_final.png'];
 
         var imgLocation = 'http://source.igdut.cn/',
-            //imgLocation = window.location.origin + '/img/',
+        //imgLocation = window.location.origin + '/img/',
             $slide1 = $('.slide1'),
             $loading = $('.loading-content'),
             $progress = $('.progress'),
-            $pagination = $('.swiper-pagination-bullets'),
+            //$pagination = $('.swiper-pagination-bullets'),
             successCount = 0,
             len = imgList.length;
 
@@ -122,7 +122,7 @@ var God = {
                         //隐藏加载元素(显示欢迎页)
                         $loading.style.display = 'none';
                         //显示右边导航栏
-                        $pagination.style.display = 'block';
+                        //$pagination.style.display = 'block';
 
                         //激活可向下滑动
                         $slide1.setAttribute('class', $slide1.getAttribute('class').replace(' swiper-no-swiping', ''));
@@ -136,7 +136,7 @@ var God = {
                     //隐藏加载元素(显示欢迎页)
                     $loading.style.display = 'none';
                     //显示右边导航栏
-                    $pagination.style.display = 'block';
+                    //$pagination.style.display = 'block';
 
                     //激活可向下滑动
                     $slide1.setAttribute('class', $slide1.getAttribute('class').replace(' swiper-no-swiping', ''));
@@ -153,7 +153,7 @@ var God = {
                 case 0:
                     me.showModal('未能获取到信息，请返回重新登录。');
                     console.log('获取失败(未登录等原因)' + data.code + data.msg);
-                    //window.location.pathname = './index.html'
+                    window.location.pathname = './index.html'
                     break;
                 case 1:
                     console.log('获取信息成功');
@@ -204,19 +204,41 @@ var God = {
             }
 
             var setReadingList = function (books) {
-                var len = books.length,
-                    pages = Math.ceil(len / 10);
+                var html = '',
+                    pages = Math.ceil(books.length / 10);
+
+                //for一次添加一页,i表示当前页
                 for (var i = 1; i <= pages; i++) {
-                    while (len > 0) {
-                        len--;
+                    //每个分页开始计数的书的编号
+                    var start = (i - 1) * 10 + 1;
+                    html += ("<div class='swiper-slide h-slide h-slide" + i + "'><div class='font-abc font-borrowlist-books'>");
+
+                    //1.非尾页时
+                    if (i != pages) {
+                        //for一次添加一条
+                        for (var j = 0; j < 10; j++) {
+                            html += "<p>" + (start + j) + ".《" + books.shift() + "》</p>";
+                        }
                     }
+                    //2.尾页时
+                    if (i == pages) {
+                        var j = 0;
+                        while (books.length > 0) {
+                            html += "<p>" + (start + j) + ".《" + books.shift() + "》</p>";
+                            j++;
+                        }
+                    }
+
+                    html += "</div><div class='h-bottom-style'></div></div>"
                 }
+
+                $('.data10').innerHTML = html;
 
                 var listSwiper = new Swiper('.borrowlist-container', {
                     direction: "horizontal",
                     slidesPerView: "auto",
                     centeredSlides: true,
-                    spaceBetween: 15
+                    spaceBetween: 25
                 })
             }
 
@@ -230,7 +252,7 @@ var God = {
             $('.data7').innerHTML = msg.bookcount;
             $('.data8').innerHTML = Math.round(+msg.rankingrade * 100) + '%';
             $('.data9').innerHTML = setTitle(msg.bookcount);
-            $('.data10').innerHTML = setReadingList(msg.books);
+            setReadingList(msg.books);
             $('.data11').innerHTML = msg.favorite.split(',')[0];
             $('.data12').innerHTML = msg.bookcount;
             $('.data13').innerHTML = msg.favorite.split(',')[1];

@@ -94,24 +94,24 @@ i {
     position: relative;
 }
 
-.swiper-container-vertical > .swiper-pagination-bullets {
-    display: none;
-    right: 0.33rem;
-    top: 48%;
-}
+/*.swiper-container-vertical > .swiper-pagination-bullets {*/
+/*display: none;*/
+/*right: 0.33rem;*/
+/*top: 48%;*/
+/*}*/
 
-.swiper-container-vertical > .swiper-pagination-bullets .swiper-pagination-bullet {
-    background: #b28947;
-    opacity: .4;
-    width: 0.25rem;
-    height: 0.25rem;
-    margin: 0.1rem 0;
-}
+/*.swiper-container-vertical > .swiper-pagination-bullets .swiper-pagination-bullet {*/
+/*background: #b28947;*/
+/*opacity: .4;*/
+/*width: 0.25rem;*/
+/*height: 0.25rem;*/
+/*margin: 0.1rem 0;*/
+/*}*/
 
-.swiper-container-vertical > .swiper-pagination-bullets .swiper-pagination-bullet-active {
-    background: #b28947;
-    opacity: 1;
-}
+/*.swiper-container-vertical > .swiper-pagination-bullets .swiper-pagination-bullet-active {*/
+/*background: #b28947;*/
+/*opacity: 1;*/
+/*}*/
 
 /*加载loading*/
 .loading-content {
@@ -209,11 +209,109 @@ i {
 }
 
 .font-borrowlist-title {
-
+    top: 1.8rem;
 }
 
-.font-borrowlist-booklist {
+[data-dpr="2"] .font-borrowlist-title {
+    top: .8rem;
+}
 
+[data-dpr="3"] .font-borrowlist-title {
+    top: .3rem;
+}
+
+.font-borrowlist-books {
+    height: 100%;
+    overflow: hidden;
+    margin: .4rem .6rem;
+    padding-bottom: .4rem;
+    font-size: 44px;
+    line-height: 50px;
+}
+
+[data-dpr="2"] .font-borrowlist-books {
+    margin: .2rem .3rem;
+    padding-bottom: .2rem;
+    font-size: 40px;
+    line-height: 50px;
+}
+
+[data-dpr="3"] .font-borrowlist-books {
+    margin: .1rem .2rem;
+    padding-bottom: .2rem;
+    font-size: 40px;
+    line-height: 50px;
+}
+
+.borrowlist-container {
+    position: absolute;
+    width: 100%;
+    top: 4.2rem;
+    bottom: 3.8rem;
+    overflow: visible;
+}
+
+[data-dpr="2"] .borrowlist-container {
+    top: 2rem;
+    bottom: 1.8rem;
+}
+
+[data-dpr="3"] .borrowlist-container {
+    top: 1.05rem;
+    bottom: 1.0rem;
+}
+
+.borrowlist-container p {
+    padding: .18rem 0;
+}
+
+[data-dpr="2"] .borrowlist-container p {
+    padding: .09rem 0;
+}
+
+[data-dpr="3"] .borrowlist-container p {
+    padding: .065rem 0;
+}
+
+.h-slide {
+    float: left;
+    height: 100%;
+    width: 85%;
+    position: relative;
+    background: #fff;
+    border-top: .35rem solid #76428e;
+    border-radius: .35rem .35rem 0 0;
+}
+
+[data-dpr="2"] .h-slide {
+    border-top: 0.15rem solid #76428e;
+    border-radius: 0.15rem 0.15rem 0 0;
+}
+
+[data-dpr="3"] .h-slide {
+    border-top: .1rem solid #76428e;
+    border-radius: .1rem .1rem 0 0;
+}
+
+.h-bottom-style {
+    position: absolute;
+    width: 100%;
+    background: url(http://source.igdut.cn/booklist_bottom.png) repeat-x;
+    background-size: 18rem auto;
+    bottom: -0.5rem;
+    height: 0.5rem;
+}
+
+[data-dpr="2"] .h-bottom-style {
+    background-size: 8rem auto;
+    bottom: -0.11rem;
+    height: 0.11rem;
+}
+
+[data-dpr="3"] .h-bottom-style {
+    background-size: 5rem auto;
+    bottom: -0.11rem;
+    height: 0.11rem;
 }
 
 /*6.借阅兴趣*/
