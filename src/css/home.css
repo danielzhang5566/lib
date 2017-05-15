@@ -4,6 +4,10 @@ html, body {
     height: 100%;
 }
 
+li {
+    list-style: none;
+}
+
 i {
     font-style: inherit;
 }
@@ -261,15 +265,16 @@ i {
     bottom: 1.0rem;
 }
 
-.borrowlist-container p {
+.borrowlist-container li {
+    width: 100%;
     padding: .18rem 0;
 }
 
-[data-dpr="2"] .borrowlist-container p {
+[data-dpr="2"] .borrowlist-container li {
     padding: .09rem 0;
 }
 
-[data-dpr="3"] .borrowlist-container p {
+[data-dpr="3"] .borrowlist-container li {
     padding: .065rem 0;
 }
 

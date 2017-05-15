@@ -211,25 +211,25 @@ var God = {
                 for (var i = 1; i <= pages; i++) {
                     //每个分页开始计数的书的编号
                     var start = (i - 1) * 10 + 1;
-                    html += ("<div class='swiper-slide h-slide h-slide" + i + "'><div class='font-abc font-borrowlist-books'>");
+                    html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books'>");
 
                     //1.非尾页时
                     if (i != pages) {
                         //for一次添加一条
                         for (var j = 0; j < 10; j++) {
-                            html += "<p>" + (start + j) + ".《" + books.shift() + "》</p>";
+                            html += "<li>" + (start + j) + ".《" + books.shift() + "》</li>";
                         }
                     }
                     //2.尾页时
                     if (i == pages) {
                         var j = 0;
                         while (books.length > 0) {
-                            html += "<p>" + (start + j) + ".《" + books.shift() + "》</p>";
+                            html += "<li>" + (start + j) + ".《" + books.shift() + "》</li>";
                             j++;
                         }
                     }
 
-                    html += "</div><div class='h-bottom-style'></div></div>"
+                    html += "</ul><div class='h-bottom-style'></div></div>"
                 }
 
                 $('.data10').innerHTML = html;
