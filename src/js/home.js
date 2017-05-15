@@ -100,10 +100,8 @@ var God = {
 
         var imgLocation = 'http://source.igdut.cn/',
         //imgLocation = window.location.origin + '/img/',
-            $slide1 = $('.slide1'),
-            $loading = $('.loading-content'),
             $progress = $('.progress'),
-            //$pagination = $('.swiper-pagination-bullets'),
+        //$pagination = $('.swiper-pagination-bullets'),
             successCount = 0,
             len = imgList.length;
 
@@ -117,30 +115,10 @@ var God = {
                 //所有图片成功加载
                 if (successCount == len) {
                     console.log('所有图片预加载成功')
-                    //延时确保ajax请求及DOM操作完成
-                    setTimeout(function () {
-                        //隐藏加载元素(显示欢迎页)
-                        $loading.style.display = 'none';
-                        //显示右边导航栏
-                        //$pagination.style.display = 'block';
-
-                        //激活可向下滑动
-                        $slide1.setAttribute('class', $slide1.getAttribute('class').replace(' swiper-no-swiping', ''));
-                    }, 1000)
                 }
             }
             oneImg.onerror = function () {
-                console.log('Failed to load the image');
-                //延时确保ajax请求及DOM操作完成
-                setTimeout(function () {
-                    //隐藏加载元素(显示欢迎页)
-                    $loading.style.display = 'none';
-                    //显示右边导航栏
-                    //$pagination.style.display = 'block';
-
-                    //激活可向下滑动
-                    $slide1.setAttribute('class', $slide1.getAttribute('class').replace(' swiper-no-swiping', ''));
-                }, 1000)
+                console.log('图片并未成功加载');
             }
         }
     },
@@ -176,10 +154,11 @@ var God = {
             //    //切换展示内容\音乐等
             //}
 
-            fillData(msg);
+            //填数据,函数执行完成后激活页面
+            fillData(msg, me.showPage());
         }
 
-        var fillData = function (msg) {
+        var fillData = function (msg, callback) {
             //1.先处理一下后台传过来的数据
 
             var setTime1 = function (time) {
@@ -259,7 +238,24 @@ var God = {
             $('.data14').innerHTML = setTime2(msg.lastbooktime);
             $('.data15').innerHTML = '《' + msg.lastbook + '》';
 
+            callback && callback();
         }
+    },
+
+    showPage: function () {
+        var $slide1 = $('.slide1'),
+            $loading = $('.loading-content');
+
+        //延时1s确保页面重绘完成
+        setTimeout(function () {
+            //隐藏加载元素(显示欢迎页)
+            $loading.style.display = 'none';
+            //显示右边导航栏
+            //$pagination.style.display = 'block';
+
+            //激活可向下滑动
+            $slide1.setAttribute('class', $slide1.getAttribute('class').replace(' swiper-no-swiping', ''));
+        }, 1000)
     },
 
     music: function () {
