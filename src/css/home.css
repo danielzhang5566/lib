@@ -349,6 +349,24 @@ i {
 
 }
 
+/*音乐图标*/
+.music {
+    position: absolute;
+    display: none;
+    top: .2rem;
+    right: .2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    background: url('http://source.igdut.cn/music_play.png') no-repeat;
+    background-size: 100%;
+    z-index: 200;
+}
+
+.music-play {
+    animation: 1.5s linear infinite music-circle;
+    -webkit-animation: 1.5s linear infinite music-circle;
+}
+
 /*** CSS动效 ***/
 
 /*字体*/
@@ -377,3 +395,23 @@ i {
     }
 }
 
+/*音乐图标*/
+@keyframes music-circle {
+    0% {
+        transform: rotate(0)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+@-webkit-keyframes music-circle {
+    0% {
+        -webkit-transform: rotate(0)
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg)
+    }
+}

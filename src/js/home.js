@@ -244,12 +244,17 @@ var God = {
 
     showPage: function () {
         var $slide1 = $('.slide1'),
-            $loading = $('.loading-content');
+            $loading = $('.loading-content'),
+            $music = $('.music');
 
         //延时1s确保页面重绘完成
         setTimeout(function () {
-            //隐藏加载元素(显示欢迎页)
+            //显示欢迎页(隐藏加载元素)
             $loading.style.display = 'none';
+
+            //显示音乐图标
+            $music.style.display = 'block';
+
             //显示右边导航栏
             //$pagination.style.display = 'block';
 
@@ -259,7 +264,33 @@ var God = {
     },
 
     music: function () {
+        var me = this,
+            $music = $('.music'),
+            $audio = $('.audio'),
+            onoff = true;
 
+        $music.addEventListener('touchstart', function () {
+            if (onoff) {
+                $music.setAttribute('class', 'music music-play');
+                $audio.play();
+            } else {
+                $music.setAttribute('class', 'music');
+                $audio.pause();
+            }
+            onoff = !onoff;
+        });
+
+        me.triggerEvent($music, 'touchstart');
+
+
+    },
+
+    //封装模拟触发事件
+    triggerEvent: function (element, type) {
+        var event = document.createEvent('HTMLEvents');
+        event.eventName = type;
+        event.initEvent(type, true, true);
+        return !element.dispatchEvent(event);
     },
 
     convertArray: function (arrayLike) {
