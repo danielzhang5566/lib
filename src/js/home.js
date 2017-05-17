@@ -96,7 +96,8 @@ var God = {
 
     //图片预加载
     loadImg: function () {
-        var imgList = ['bg1_welcome.png', 'bg2_firsttime.png', 'bg3_firstbook.png', 'bg4_total.png', 'bg6_interest.png', 'bg7_lastbook.png', 'bg8_final.png'];
+        var me = this,
+            imgList = ['bg1_welcome.png', 'bg2_firsttime.png', 'bg3_firstbook.png', 'bg4_total.png', 'bg6_interest.png', 'bg7_lastbook.png', 'bg8_final.png'];
 
         var imgLocation = 'http://source.igdut.cn/',
         //imgLocation = window.location.origin + '/img/',
@@ -114,11 +115,13 @@ var God = {
 
                 //所有图片成功加载
                 if (successCount == len) {
-                    console.log('所有图片预加载成功')
+                    console.log('所有图片预加载成功');
+                    me.showPage();
                 }
             }
             oneImg.onerror = function () {
                 console.log('图片并未成功加载');
+                me.showPage()
             }
         }
     },
@@ -154,11 +157,11 @@ var God = {
             //    //切换展示内容\音乐等
             //}
 
-            //填数据,函数执行完成后激活页面
-            fillData(msg, me.showPage());
+            //填数据
+            fillData(msg);
         }
 
-        var fillData = function (msg, callback) {
+        var fillData = function (msg) {
             //1.先处理一下后台传过来的数据
 
             var setTime1 = function (time) {
@@ -238,7 +241,6 @@ var God = {
             $('.data14').innerHTML = setTime2(msg.lastbooktime);
             $('.data15').innerHTML = '《' + msg.lastbook + '》';
 
-            callback && callback();
         }
     },
 
