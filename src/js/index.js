@@ -16,13 +16,50 @@ var God = {
 
         $loginBtn.addEventListener('touchstart', function (e) {
             me.changeLoginBtn();
-            me.verify($no.value,$sname.value);
+            me.verify($no.value, $sname.value, function (param) {
+                me.ajax('POST', param, './easy.php', function (data) {
+                    //限制登录次数10次
+                    //可能改成限制登录帐号个数
+                    if (data.count > 9) {
+                        me.showModal('您已经超过登录次数限制，请稍后再登录~');
+                        console.log('超过登录次数限制--' + data.code + data.msg);
+                        me.changeLoginBtn();
+                    } else {
+                        switch (data.code) {
+                            case -3:
+                                console.log('已登录');
+                                window.location.pathname = './home.html'
+                                break;
+                            case -2:
+                            case -1:
+                                me.showModal('您的输入有误，请检查后重新输入~');
+                                console.log('输入或请求有误--' + data.code + data.msg);
+                                me.changeLoginBtn();
+                                break;
+                            case 0:
+                                me.showModal('您输入的姓名或学号有误，请重新输入~');
+                                console.log('姓名与学号不对应--' + data.code + data.msg);
+                                me.changeLoginBtn();
+                                break;
+                            case 1:
+                                console.log('登录成功');
+                                window.location.pathname = './home.html'
+                                break;
+                            default:
+                                me.showModal('A1:出错啦~请稍后登录呗~');
+                                console.log('遇到未知错误--' + data.code + data.msg);
+                                me.changeLoginBtn();
+                                break;
+                        }
+                    }
+                });
+            });
         })
 
         console.log('初始化页面成功')
     },
 
-    verify: function(no,name) {
+    verify: function (no, name, callback) {
         var me = this,
             sno = no.trim(),
             sname = name.trim();
@@ -31,42 +68,24 @@ var God = {
             console.log('check ok');
             var param = 'uid=' + sno + '&name=' + sname + '&cmd=login';
 
-            if (sno[3] == '6' || sno[3] == '5' || sno[3] == '4' || sno[3] == '3') {
-                me.ajax('POST', param, './easy.php', function (data) {
-                    switch (data.code) {
-                        case -3:
-                            console.log('已登录');
-                            window.location.pathname = './home.html'
-                            break;
-                        case -2:
-                        case -1:
-                            me.showModal('您的输入有误,请检查后重新输入~');
-                            console.log('输入或请求有误--' + data.code + data.msg);
-                            me.changeLoginBtn();
-                            break;
-                        case 0:
-                            me.showModal('您输入的姓名或学号有误,请重新输入~');
-                            console.log('姓名与学号不对应--' + data.code + data.msg);
-                            me.changeLoginBtn();
-                            break;
-                        case 1:
-                            console.log('登录成功');
-                            window.location.pathname = './home.html'
-                            break;
-                        default:
-                            me.showModal('A1:出错啦~请稍后登录呗~');
-                            console.log('遇到未知错误--' + data.code + data.msg);
-                            me.changeLoginBtn();
-                            break;
-                    }
-                });
+            if (sno[3] == '3') {
+                callback && callback(param);
+            } else if (sno[3] == '6' || sno[3] == '5' || sno[3] == '4') {
+                var isLogin = me.showModal('本纪念册为毕业生而设计，您不是大四毕业生，确定要访问吗？', true);
+                if (isLogin == true) {
+                    callback && callback(param);
+                } else {
+                    console.log('非大四在读本科生用户取消了登录操作');
+                    me.changeLoginBtn();
+                    return false;
+                }
             } else {    //非在读本科生
                 me.showModal('抱歉，本纪念册仅向在读本科生开放。');
                 me.changeLoginBtn();
             }
 
         } else {    //正则不通过
-            me.showModal('您输入的姓名或学号格式有误,请检查后重新输入~');
+            me.showModal('您输入的姓名或学号格式有误，请检查后重新输入~');
             me.changeLoginBtn();
         }
 
@@ -91,7 +110,11 @@ var God = {
         return !element.dispatchEvent(event);
     },
 
-    showModal: function (str) {
+    showModal: function (str, isConfirm) {
+        var isConfirm = isConfirm || false;
+        if (isConfirm) {
+            return window.confirm(str);
+        }
         return window.alert(str);
     },
 
