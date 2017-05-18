@@ -14,13 +14,9 @@ var God = {
             $no = $('#sno'),
             $sname = $('#sname');
 
-        $loginBtn.addEventListener('touchend', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
+        $loginBtn.addEventListener('touchstart', function (e) {
             me.changeLoginBtn();
             me.verify($no.value,$sname.value);
-
         })
 
         console.log('初始化页面成功')
