@@ -148,6 +148,20 @@ i {
     font-size: 60px;
 }
 
+/*箭头*/
+.arrow-container {
+    width: 61px;/*箭头宽度*/
+    margin: 0 auto;
+    text-align: initial;
+}
+
+.arrow {
+    position: absolute;
+    bottom: .1rem;
+    animation: arrow-animation 1.2s linear infinite;
+    -webkit-animation: arrow-animation 1.2s linear infinite;
+}
+
 /*1.欢迎页*/
 .slide1 {
     background: url('http://source.igdut.cn/bg1_welcome.png') 0 0;
@@ -168,15 +182,6 @@ i {
 
 [data-dpr="3"] .font-welcome {
     bottom: 1rem;
-}
-
-.arrow {
-    position: absolute;
-    bottom: .1rem;
-    width: .833rem;
-    height: .277rem;
-    animation: arrow-animation 1.2s linear infinite;
-    -webkit-animation: arrow-animation 1.2s linear infinite;
 }
 
 /*2.第一次来到图书馆*/
