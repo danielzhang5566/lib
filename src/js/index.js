@@ -18,17 +18,17 @@ var God = {
             me.changeLoginBtn();
             me.verify($no.value, $sname.value, function (param) {
                 me.ajax('POST', param, './easy.php', function (data) {
-                    //限制登录次数10次
-                    //可能改成限制登录帐号个数
-                    if (data.count > 9) {
-                        me.showModal('您已经超过登录次数限制，请稍后再登录~');
-                        console.log('超过登录次数限制--' + data.code + data.msg);
+                    if(data.bookcount == 0){
+                        me.showModal('很遗憾，您大学期间未借过书，无法进入『馆藏记忆』~');
+                        console.log('借书0本--' + data.code + data.msg);
                         me.changeLoginBtn();
-                    } else {
+                    }else{
                         switch (data.code) {
                             case -3:
-                                console.log('已登录');
-                                window.location.pathname = './home.html'
+                                //超出限制登录帐号(5个,不按次数,有效期2小时)
+                                me.showModal('您已经超过登录帐号限制，请稍后再登录~');
+                                console.log('超过登录帐号限制--' + data.code + data.msg);
+                                me.changeLoginBtn();
                                 break;
                             case -2:
                             case -1:
