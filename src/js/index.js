@@ -18,40 +18,35 @@ var God = {
             me.changeLoginBtn();
             me.verify($no.value, $sname.value, function (param) {
                 me.ajax('POST', param, './easy.php', function (data) {
-                    if(data.bookcount == 0){
-                        me.showModal('很遗憾，您大学期间未借过书，无法进入『馆藏记忆』~');
-                        console.log('借书0本--' + data.code + data.msg);
-                        me.changeLoginBtn();
-                    }else{
-                        switch (data.code) {
-                            case -3:
-                                //超出限制登录帐号(5个,不按次数,有效期2小时)
-                                me.showModal('您已经超过登录帐号限制，请稍后再登录~');
-                                console.log('超过登录帐号限制--' + data.code + data.msg);
-                                me.changeLoginBtn();
-                                break;
-                            case -2:
-                            case -1:
-                                me.showModal('您的输入有误，请检查后重新输入~');
-                                console.log('输入或请求有误--' + data.code + data.msg);
-                                me.changeLoginBtn();
-                                break;
-                            case 0:
-                                me.showModal('您输入的姓名或学号有误，请重新输入~');
-                                console.log('姓名与学号不对应--' + data.code + data.msg);
-                                me.changeLoginBtn();
-                                break;
-                            case 1:
-                                console.log('登录成功');
-                                window.location.pathname = './home.html'
-                                break;
-                            default:
-                                me.showModal('A1:出错啦~请稍后登录呗~');
-                                console.log('遇到未知错误--' + data.code + data.msg);
-                                me.changeLoginBtn();
-                                break;
-                        }
-                    }
+                    switch (data.code) {
+                        case -3:
+                            //超出限制登录帐号(5个,不按次数,有效期2小时)
+                            me.showModal('您已经超过登录帐号限制，请稍后再登录~');
+                            console.log('超过登录帐号限制');
+                            break;
+                        case -2:
+                        case -1:
+                            me.showModal('您的输入有误，请检查后重新输入~');
+                            console.log('输入或请求有误');
+                            break;
+                        case 0:
+                            me.showModal('您输入的姓名或学号有误，请重新输入~');
+                            console.log('姓名与学号不对应');
+                            break;
+                        case 1:
+                            console.log('登录成功');
+                            window.location.pathname = './home.html'
+                            break;
+                        case 2:
+                            me.showModal('很遗憾，您大学期间未借过书，无法进入『馆藏记忆』~');
+                            console.log('借书0本');
+                            break;
+                        default:
+                            me.showModal('A1:出错啦~请稍后登录呗~');
+                            console.log('遇到未知错误--' + data.code + data.msg);
+                            break;
+                    };
+                    me.changeLoginBtn();
                 });
             });
         })
