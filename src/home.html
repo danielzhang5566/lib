@@ -15,6 +15,8 @@
     <script src="http://source.igdut.cn/swiper.min.js"></script>
     <script>var loadingImg=["book_loading.gif","bg.png"];for(var i=0;i<loadingImg.length;i++){(function(i){var oImg=new Image();oImg.onload=function(){i++;oImg=null};oImg.src="http://source.igdut.cn/"+loadingImg[i]})(i)};</script>
     <script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?0895274f1e6f336d5ee2999a7dccb5e5";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();</script>
+    <!--微信中开启自动播放音乐(适配ios微信内的情况)-->
+    <script>document.addEventListener("WeixinJSBridgeReady",function(){document.getElementsByClassName('audio')[0].play()},false)</script>
 </head>
 <body>
 <!-- Slider main container -->
@@ -110,7 +112,7 @@
                             <div class="h-bottom-style"></div>
                         </div>
                         <div class="swiper-slide h-slide h-slide2">
-                            <ul class="font-abc font-borrowlist-booklist">
+                            <ul class="font-abc font-borrowlist-books">
                                 <li>1.《那年花开》</li>
                                 <li>1.《那年花开》</li>
                             </ul>
@@ -160,7 +162,7 @@
         <!--结语-->
         <div class="swiper-slide slide8">
             <div class="swiper-content">
-                <p class="font-abc font-position font-final">
+                <p class="font-abc font-position font-epilogue">
                     春暖花开，诗和远方
                     <br>
                     有一个美丽的新天地
@@ -175,6 +177,28 @@
                     对图书馆的关注与支持
                     <br>
                     祝福你，毕业生！
+                </p>
+            </div>
+        </div>
+        <!--尾屏-->
+        <div class="swiper-slide slide9">
+            <div class="swiper-content">
+                <p class="font-abc font-position font-final">
+                    意犹未尽？来看看我们今年的读者之星吧：
+                    <br>
+                    <a href="#">『2017|读者之星』</a>
+                    <br>
+                    亦或是，有什么想对图书馆说的？
+                    <br>
+                    <a href="http://msg.weixiao.qq.com/t/e5867d2374ea03626377a71adaee2ea9">『留言板』</a>
+                    <br>
+                    <br>
+                    <br>
+                    图书馆X毕业纪念册项目组
+                    <br>
+                    倾情贡献
+                    <br>
+                    邮箱联系：hi@igdut.cn
                 </p>
             </div>
         </div>
