@@ -107,7 +107,7 @@ i {
 /*加载loading*/
 .loading-content {
     position: relative;
-    background: white;
+    background: #f1eee5;
     height: 100%;
     width: 100%;
 }
@@ -376,7 +376,7 @@ i {
 }
 
 /*9.尾屏*/
-.slide8 {
+.slide9 {
     background: url('http://source.igdut.cn/bg.png') 0 0;
     background-size: 100% 100%;
 }
@@ -399,8 +399,8 @@ i {
 }
 
 .music-play {
-    animation: 1.5s linear infinite music-circle;
-    -webkit-animation: 1.5s linear infinite music-circle;
+    animation: 3s linear infinite music-circle;
+    -webkit-animation: 3s linear infinite music-circle;
 }
 
 /*** CSS动效 ***/
