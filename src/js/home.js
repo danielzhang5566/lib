@@ -185,7 +185,7 @@ var God = {
 
             }
 
-            var setReadingList = function (books) {
+            var setReadingList = function (books,charCounts) {
                 var html = '',
                     pages = Math.ceil(books.length / 10);
 
@@ -193,7 +193,14 @@ var God = {
                 for (var i = 1; i <= pages; i++) {
                     //每个分页开始计数的书的编号
                     var start = (i - 1) * 10 + 1;
-                    html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books'>");
+
+                    if(charCounts[i - 1] < 80) {            //0-79   书名几乎都是一行,用大字号 font-big
+                        html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books font-big'>");
+                    }else if(charCounts[i - 1] < 120) {     //80-119 书名部分两行,用默认中字号
+                        html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books'>");
+                    }else {                                 //119-   书名平均两行以上,用小字号 font-small
+                        html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books font-small'>");
+                    }
 
                     //1.非尾页时
                     if (i != pages) {
@@ -224,6 +231,7 @@ var God = {
                 })
             }
 
+
             //2.然后再填进DOM
             $('.data1').innerHTML = msg.name;
             $('.data2').innerHTML = setTime1(msg.entertime);
@@ -232,9 +240,9 @@ var God = {
             $('.data5').innerHTML = '《' + msg.firstbook + '》';
             $('.data6').innerHTML = msg.grade;
             $('.data7').innerHTML = msg.bookcount;
-            $('.data8').innerHTML = Math.round(+msg.rankingrade * 100) + '%';
+            $('.data8').innerHTML = +msg.rankingrade * 100 + '%';
             $('.data9').innerHTML = setTitle(msg.bookcount);
-            setReadingList(msg.books);
+            setReadingList(msg.books,msg.booknum);
             $('.data11').innerHTML = msg.favorite.split(',')[0];
             $('.data12').innerHTML = msg.bookcount;
             $('.data13').innerHTML = msg.favorite.split(',')[1];
@@ -269,17 +277,17 @@ var God = {
         var me = this,
             $music = $('.music'),
             $audio = $('.audio'),
-            onoff = true;
+            isPlaying = true;
 
         $music.addEventListener('touchstart', function () {
-            if (onoff) {
+            if (isPlaying) {
                 $music.setAttribute('class', 'music music-play');
                 $audio.play();
             } else {
                 $music.setAttribute('class', 'music');
                 $audio.pause();
             }
-            onoff = !onoff;
+            isPlaying = !isPlaying;
         });
 
         me.triggerEvent($music, 'touchstart');

@@ -257,6 +257,17 @@ i {
     line-height: 50px;
 }
 
+/*加 !important 是为了覆盖上面两个data-dpr="2/3"属性*/
+.font-small {
+    font-size: 42px !important;
+    line-height: 42px !important;
+}
+
+.font-big {
+    font-size: 44px !important;
+    line-height: 55px !important;
+}
+
 .borrowlist-container {
     position: absolute;
     width: 100%;
@@ -291,7 +302,7 @@ i {
 .h-slide {
     float: left;
     height: 100%;
-    width: 85%;
+    width: 80%;
     position: relative;
     background: #fff;
     border-top: .35rem solid #76428e;
@@ -352,6 +363,16 @@ i {
 /*8.结语*/
 .slide8 {
     background: url('http://source.igdut.cn/bg8_final.png') 0 0;
+    background-size: 100% 100%;
+}
+
+.font-epilogue {
+
+}
+
+/*9.尾屏*/
+.slide8 {
+    background: url('http://source.igdut.cn/bg.png') 0 0;
     background-size: 100% 100%;
 }
 
