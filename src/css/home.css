@@ -263,6 +263,11 @@ i {
     line-height: 42px !important;
 }
 
+.font-very-small {
+    font-size: 38px !important;
+    line-height: 38px !important;
+}
+
 .font-big {
     font-size: 44px !important;
     line-height: 55px !important;

@@ -194,12 +194,14 @@ var God = {
                     //每个分页开始计数的书的编号
                     var start = (i - 1) * 10 + 1;
 
-                    if(charCounts[i - 1] < 80) {            //0-79   书名几乎都是一行,用大字号 font-big
+                    if(charCounts[i - 1] < 80) {            //0-79     书名几乎都是一行,用大字号 font-big
                         html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books font-big'>");
-                    }else if(charCounts[i - 1] < 120) {     //80-119 书名部分两行,用默认中字号
+                    }else if(charCounts[i - 1] < 120) {     //80-119   书名部分两行,用默认中字号
                         html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books'>");
-                    }else {                                 //119-   书名平均两行以上,用小字号 font-small
+                    }else if(charCounts[i - 1] < 190) {     //120-189  书名平均两行,用小字号 font-small
                         html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books font-small'>");
+                    }else {                                 //190-     书名平均三行以上,用特小字号 font-very-small
+                        html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books font-very-small'>");
                     }
 
                     //1.非尾页时
