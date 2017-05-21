@@ -132,7 +132,7 @@ var God = {
         me.ajax('POST', 'cmd=getinfo', './easy.php', function (data) {
             switch (data.code) {
                 case 0:
-                    me.showModal('未能获取到信息，请返回重新登录。');
+                    me.showAlert('未能获取到信息，请返回重新登录。');
                     console.log('获取失败(未登录等原因)' + data.code + data.msg);
                     window.location.pathname = './index.html'
                     break;
@@ -141,7 +141,7 @@ var God = {
                     userType(data.msg);
                     break;
                 default:
-                    me.showModal('B1:出错啦~请稍后登录呗~');
+                    me.showAlert('B1:出错啦~请稍后登录呗~');
                     console.log('遇到未知错误--' + data.code + data.msg);
                     break;
             }
@@ -309,8 +309,13 @@ var God = {
         return Array.prototype.slice.call(arrayLike, 0);
     },
 
-    showModal: function (str) {
-        return window.alert(str);
+    showAlert: function (str) {
+        window.alert(str);
+    },
+
+    showConfirm: function (str, callback) {
+        var isConfirm = window.confirm(str);
+        callback && callback(isConfirm);
     },
 
     /**
@@ -334,14 +339,14 @@ var God = {
                     var data = JSON.parse(xhr.responseText);
                     callback && callback(data);
                 } else {
-                    me.showModal('A2:出错啦~请稍后登录呗~');
+                    me.showAlert('A2:出错啦~请稍后登录呗~');
                     console.log('There was a problem with the request--status code:' + xhr.status);
                     location.reload();
                 }
             }
         }
         xhr.onerror = function (e) {
-            me.showModal('A3:出错啦~请稍后登录呗~');
+            me.showAlert('A3:出错啦~请稍后登录呗~');
             console.log(e);
             location.reload();
         };

@@ -21,16 +21,16 @@ var God = {
                     switch (data.code) {
                         case -3:
                             //超出限制登录帐号(5个,不按次数,有效期2小时)
-                            me.showModal('您已经超过登录帐号限制，请稍后再登录~');
+                            me.showAlert('您已经超过登录帐号限制，请稍后再登录~');
                             console.log('超过登录帐号限制');
                             break;
                         case -2:
                         case -1:
-                            me.showModal('您的输入有误，请检查后重新输入~');
+                            me.showAlert('您的输入有误，请检查后重新输入~');
                             console.log('输入或请求有误');
                             break;
                         case 0:
-                            me.showModal('您输入的姓名或学号有误，请重新输入~');
+                            me.showAlert('您输入的姓名或学号有误，请重新输入~');
                             console.log('姓名与学号不对应');
                             break;
                         case 1:
@@ -38,14 +38,15 @@ var God = {
                             window.location.pathname = './home.html'
                             break;
                         case 2:
-                            me.showModal('很遗憾，您大学期间未借过书，无法进入『馆藏记忆』~');
+                            me.showAlert('很遗憾，您大学期间未借过书，无法进入『馆藏记忆』~');
                             console.log('借书0本');
                             break;
                         default:
-                            me.showModal('A1:出错啦~请稍后登录呗~');
+                            me.showAlert('A1:出错啦~请稍后登录呗~');
                             console.log('遇到未知错误--' + data.code + data.msg);
                             break;
-                    };
+                    }
+                    ;
                     me.changeLoginBtn();
                 });
             });
@@ -66,21 +67,22 @@ var God = {
             if (sno[3] == '3') {
                 callback && callback(param);
             } else if (sno[3] == '6' || sno[3] == '5' || sno[3] == '4') {
-                var isLogin = me.showModal('本纪念册为毕业生而设计，您不是大四毕业生，确定要访问吗？', true);
-                if (isLogin == true) {
-                    callback && callback(param);
-                } else {
-                    console.log('非大四在读本科生用户取消了登录操作');
-                    me.changeLoginBtn();
-                    return false;
-                }
+                me.showConfirm('本纪念册为毕业生而设计，您不是大四毕业生，确定要访问吗？', function (isLogin) {
+                    if (isLogin == true) {
+                        callback && callback(param);
+                    } else {
+                        console.log('非大四在读本科生用户取消了登录操作');
+                        me.changeLoginBtn();
+                        return false;
+                    }
+                });
             } else {    //非在读本科生
-                me.showModal('抱歉，本纪念册仅向在读本科生开放。');
+                me.showAlert('抱歉，本纪念册仅向在读本科生开放。');
                 me.changeLoginBtn();
             }
 
         } else {    //正则不通过
-            me.showModal('您输入的姓名或学号格式有误，请检查后重新输入~');
+            me.showAlert('您输入的姓名或学号格式有误，请检查后重新输入~');
             me.changeLoginBtn();
         }
 
@@ -105,12 +107,13 @@ var God = {
         return !element.dispatchEvent(event);
     },
 
-    showModal: function (str, isConfirm) {
-        var isConfirm = isConfirm || false;
-        if (isConfirm) {
-            return window.confirm(str);
-        }
-        return window.alert(str);
+    showAlert: function (str) {
+        window.alert(str);
+    },
+
+    showConfirm: function (str, callback) {
+        var isConfirm = window.confirm(str);
+        callback && callback(isConfirm);
     },
 
     /**
@@ -134,14 +137,14 @@ var God = {
                     var data = JSON.parse(xhr.responseText);
                     callback && callback(data);
                 } else {
-                    me.showModal('A2:出错啦~请稍后登录呗~');
+                    me.showAlert('A2:出错啦~请稍后登录呗~');
                     console.log('There was a problem with the request--status code:' + xhr.status);
                     location.reload();
                 }
             }
         }
         xhr.onerror = function (e) {
-            me.showModal('A3:出错啦~请稍后登录呗~');
+            me.showAlert('A3:出错啦~请稍后登录呗~');
             console.log(e);
             location.reload();
         };
