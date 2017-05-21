@@ -1,5 +1,5 @@
 require('../css/home.css')
-require('../font/zhanku.ttf')
+//require('../font/zhanku.ttf')
 
 //require('../img/book_loading.gif')
 //require('../img/bg.png')
@@ -9,8 +9,15 @@ require('../font/zhanku.ttf')
 //require('../img/bg4_total.png')
 //require('../img/bg6_interest.png')
 //require('../img/bg7_lastbook.png')
-//require('../img/bg8_final.png')
+//require('../img/bg8_epilogue.png')
 //require('../img/arrow.png')
+//require('../img/music_close.png')
+//require('../img/music_play.png')
+//require('../img/btn_mine.png')
+//require('../img/btn_again.png')
+//require('../img/btn_share.png')
+//require('../img/guide.png')
+
 
 var God = {
     init: function () {
@@ -21,7 +28,11 @@ var God = {
     },
 
     initPage: function () {
-        var me = this;
+        var me = this,
+            $showMine = $('.show-mine'),
+            $again = $('.once-again'),
+            $share = $('.share-info'),
+            $showGuide = $('.share-guide');
 
         //设置全屏
         me.setPageSize();
@@ -63,6 +74,35 @@ var God = {
             }
         });
 
+        //查看我的
+        $showMine.addEventListener('touchstart', function () {
+            window.location.pathname = './index.html'
+        });
+
+        //再看一遍
+        $again.addEventListener('touchstart', function () {
+            globalSwiper.forEach(function (e) {
+                e.slideTo(0, 1500, false)
+            })
+        });
+
+        //分享给朋友
+        $share.addEventListener('touchstart', function () {
+            //弹出分享引导蒙版
+            $showGuide.style.display = 'block';
+
+            //if(weixin) {  //如果是微信的情况下
+            //    var search = me.setQueryString();
+            //}
+
+        });
+
+        //分享蒙版
+        $showGuide.addEventListener('touchstart', function () {
+            $showGuide.style.display = 'none';
+        });
+
+
         console.log('初始化页面成功')
     },
 
@@ -101,7 +141,6 @@ var God = {
 
         var imgLocation = 'http://source.igdut.cn/',
         //imgLocation = window.location.origin + '/img/',
-            $progress = $('.progress'),
         //$pagination = $('.swiper-pagination-bullets'),
             successCount = 0,
             len = imgList.length;
@@ -111,7 +150,9 @@ var God = {
             oneImg.src = imgLocation + imgList[i];
             oneImg.onload = function () {
                 successCount++;
-                $progress.innerHTML = Math.floor(successCount / len * 100) + '%';
+                me.convertArray(document.querySelectorAll('.progress')).forEach(function (e) {
+                    e.innerHTML = Math.floor(successCount / len * 100) + '%';
+                });
 
                 //所有图片成功加载
                 if (successCount == len) {
@@ -126,143 +167,178 @@ var God = {
         }
     },
 
+    //填好用户数据
     userData: function () {
-        var me = this;
+        var me = this,
+            search = window.location.search,
+            $notShare = $('.not-share'),
+            $isShare = $('.is-share');
 
-        me.ajax('POST', 'cmd=getinfo', './easy.php', function (data) {
-            switch (data.code) {
-                case 0:
-                    me.showAlert('未能获取到信息，请返回重新登录。');
-                    console.log('获取失败(未登录等原因)' + data.code + data.msg);
-                    window.location.pathname = './index.html'
-                    break;
-                case 1:
-                    console.log('获取信息成功');
-                    userType(data.msg);
-                    break;
-                default:
-                    me.showAlert('B1:出错啦~请稍后登录呗~');
-                    console.log('遇到未知错误--' + data.code + data.msg);
-                    break;
-            }
-        });
-
-        //判断用户类型(可能会分性别,分学生和教工,分是否读者之星等)
-        var userType = function (msg) {
-
-            //if(info.sex == 1) {
-            //    //切换设计稿\音乐等
-            //}
-            //if(info.type == 'teacher') {
-            //    //切换展示内容\音乐等
-            //}
-
-            //填数据
-            fillData(msg);
-        }
-
-        var fillData = function (msg) {
-            //1.先处理一下后台传过来的数据
-
-            var setTime1 = function (time) {
-                var timeArr = time.split('-');
-                return "<span>" + timeArr[0] + "</span>年<span>" + timeArr[1] + "</span>月<span>" + timeArr[2] + "</span>日"
-            }
-
-            var setTime2 = function (time) {
-                var timeArr = time.split('-');
-                return "在<span>" + timeArr[0] + "</span>年的<span>" + timeArr[1] + "</span>月<span>" + timeArr[2] + "</span>日"
-            }
-
-            var setTitle = function (bookcount) {
-                if (bookcount >= 80) {
-                    return '“工大学霸”'
-                } else if (bookcount >= 30) {
-                    return '“热情读者”'
-                } else {
-                    return '"最具潜力读者"'
+        //判断是否分享页面
+        if (search.indexOf('share=') == true) { //分享页面
+            me.getQueryString(function (data) {
+                $notShare.style.display = 'none';
+                me.fillShareData(data);
+            })
+        } else {                                 //个人登录页面
+            $isShare.style.display = 'none';
+            me.ajax('POST', 'cmd=getinfo', './easy.php', function (data) {
+                switch (data.code) {
+                    case 0:
+                        me.showAlert('未能获取到信息，请返回重新登录。');
+                        console.log('获取失败(未登录等原因)' + data.code + data.msg);
+                        window.location.pathname = './index.html'
+                        break;
+                    case 1:
+                        console.log('获取信息成功');
+                        me.fillRequestData(data.msg)
+                        //如果需要判断用户类型,换成:
+                        //userType(data.msg);
+                        break;
+                    default:
+                        me.showAlert('B1:出错啦~请稍后登录呗~');
+                        console.log('遇到未知错误--' + data.code + data.msg);
+                        break;
                 }
+            });
 
-            }
+            /*
+             //判断用户类型(可能会分性别,分学生和教工,分是否读者之星等)
+             var userType = function (msg) {
 
-            var setReadingList = function (books,charCounts) {
-                var html = '',
-                    pages = Math.ceil(books.length / 10);
+             //if(info.sex == 1) {
+             //    //切换设计稿\音乐等
+             //}
+             //if(info.type == 'teacher') {
+             //    //切换展示内容\音乐等
+             //}
 
-                //for一次添加一页,i表示当前页
-                for (var i = 1; i <= pages; i++) {
-                    //每个分页开始计数的书的编号
-                    var start = (i - 1) * 10 + 1;
-
-                    if(charCounts[i - 1] < 80) {            //0-79     书名几乎都是一行,用大字号 font-big
-                        html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books font-big'>");
-                    }else if(charCounts[i - 1] < 120) {     //80-119   书名部分两行,用默认中字号
-                        html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books'>");
-                    }else if(charCounts[i - 1] < 190) {     //120-189  书名平均两行,用小字号 font-small
-                        html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books font-small'>");
-                    }else {                                 //190-     书名平均三行以上,用特小字号 font-very-small
-                        html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books font-very-small'>");
-                    }
-
-                    //1.非尾页时
-                    if (i != pages) {
-                        //for一次添加一条
-                        for (var j = 0; j < 10; j++) {
-                            html += "<li>" + (start + j) + ".《" + books.shift() + "》</li>";
-                        }
-                    }
-                    //2.尾页时
-                    if (i == pages) {
-                        var j = 0;
-                        while (books.length > 0) {
-                            html += "<li>" + (start + j) + ".《" + books.shift() + "》</li>";
-                            j++;
-                        }
-                    }
-
-                    html += "</ul><div class='h-bottom-style'></div></div>"
-                }
-
-                $('.data10').innerHTML = html;
-
-                var listSwiper = new Swiper('.borrowlist-container', {
-                    direction: "horizontal",
-                    slidesPerView: "auto",
-                    centeredSlides: true,
-                    spaceBetween: 25
-                })
-            }
-
-
-            //2.然后再填进DOM
-            $('.data1').innerHTML = msg.name;
-            $('.data2').innerHTML = setTime1(msg.entertime);
-            $('.data3').innerHTML = setTime1(msg.firstbooktime);
-            $('.data4').innerHTML = msg.gap;
-            $('.data5').innerHTML = '《' + msg.firstbook + '》';
-            $('.data6').innerHTML = msg.grade;
-            $('.data7').innerHTML = msg.bookcount;
-            $('.data8').innerHTML = +msg.rankingrade * 100 + '%';
-            $('.data9').innerHTML = setTitle(msg.bookcount);
-            setReadingList(msg.books,msg.booknum);
-            $('.data11').innerHTML = msg.favorite.split(',')[0];
-            $('.data12').innerHTML = msg.bookcount;
-            $('.data13').innerHTML = msg.favorite.split(',')[1];
-            $('.data14').innerHTML = setTime2(msg.lastbooktime);
-            $('.data15').innerHTML = '《' + msg.lastbook + '》';
-
+             //填数据
+             me.fillRequestData(msg);
+             }
+             */
         }
     },
 
+    fillShareData: function (data) {
+        $('.is-share .data1').innerHTML = data[2];
+        $('.is-share .data2').innerHTML = data[3];
+        $('.is-share .data3').innerHTML = data[4];
+        $('.is-share .data4').innerHTML = data[5];
+        $('.is-share .data5').innerHTML = data[6];
+        $('.is-share .data6').innerHTML = data[7];
+        $('.is-share .data7').innerHTML = data[8];
+        $('.is-share .data8').innerHTML = data[10];
+        $('.is-share .data9').innerHTML = data[11];
+        $('.is-share .data11').innerHTML = data[12];
+        $('.is-share .data12').innerHTML = data[8];
+        $('.is-share .data13').innerHTML = data[13];
+        $('.is-share .data14').innerHTML = data[14];
+        $('.is-share .data15').innerHTML = data[15];
+    },
+
+    fillRequestData: function (data) {
+        //1.先处理一下后台传过来的数据
+
+        var setTime1 = function (time) {
+            var timeArr = time.split('-');
+            return "<span>" + timeArr[0] + "</span>年<span>" + timeArr[1] + "</span>月<span>" + timeArr[2] + "</span>日"
+        }
+
+        var setTime2 = function (time) {
+            var timeArr = time.split('-');
+            return "在<span>" + timeArr[0] + "</span>年的<span>" + timeArr[1] + "</span>月<span>" + timeArr[2] + "</span>日"
+        }
+
+        var setTitle = function (bookcount) {
+            if (bookcount >= 80) {
+                return '“工大学霸”'
+            } else if (bookcount >= 30) {
+                return '“热情读者”'
+            } else {
+                return '"最具潜力读者"'
+            }
+
+        }
+
+        var setReadingList = function (books, charCounts) {
+            var html = '',
+                pages = Math.ceil(books.length / 10);
+
+            //for一次添加一页,i表示当前页
+            for (var i = 1; i <= pages; i++) {
+                //每个分页开始计数的书的编号
+                var start = (i - 1) * 10 + 1;
+
+                if (charCounts[i - 1] < 80) {            //0-79     书名几乎都是一行,用大字号 font-big
+                    html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books font-big'>");
+                } else if (charCounts[i - 1] < 120) {     //80-119   书名部分两行,用默认中字号
+                    html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books'>");
+                } else if (charCounts[i - 1] < 190) {     //120-189  书名平均两行,用小字号 font-small
+                    html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books font-small'>");
+                } else {                                 //190-     书名平均三行以上,用特小字号 font-very-small
+                    html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books font-very-small'>");
+                }
+
+                //1.非尾页时
+                if (i != pages) {
+                    //for一次添加一条
+                    for (var j = 0; j < 10; j++) {
+                        html += "<li>" + (start + j) + ".《" + books.shift() + "》</li>";
+                    }
+                }
+                //2.尾页时
+                if (i == pages) {
+                    var j = 0;
+                    while (books.length > 0) {
+                        html += "<li>" + (start + j) + ".《" + books.shift() + "》</li>";
+                        j++;
+                    }
+                }
+
+                html += "</ul><div class='h-bottom-style'></div></div>"
+            }
+
+            $('.not-share .data10').innerHTML = html;
+
+            var listSwiper = new Swiper('.borrowlist-container', {
+                direction: "horizontal",
+                slidesPerView: "auto",
+                centeredSlides: true,
+                spaceBetween: 25
+            })
+        }
+
+
+        //2.然后再填进DOM
+        $('.not-share .data1').innerHTML = data.name;
+        $('.not-share .data2').innerHTML = setTime1(data.entertime);
+        $('.not-share .data3').innerHTML = setTime1(data.firstbooktime);
+        $('.not-share .data4').innerHTML = data.gap;
+        $('.not-share .data5').innerHTML = '《' + data.firstbook + '》';
+        $('.not-share .data6').innerHTML = data.grade;
+        $('.not-share .data7').innerHTML = data.bookcount;
+        $('.not-share .data8').innerHTML = +data.rankingrade * 100 + '%';
+        $('.not-share .data9').innerHTML = setTitle(data.bookcount);
+        setReadingList(data.books, data.booknum);
+        $('.not-share .data11').innerHTML = data.favorite.split(',')[0];
+        $('.not-share .data12').innerHTML = data.bookcount;
+        $('.not-share .data13').innerHTML = data.favorite.split(',')[1];
+        $('.not-share .data14').innerHTML = setTime2(data.lastbooktime);
+        $('.not-share .data15').innerHTML = '《' + data.lastbook + '》';
+
+    },
+
     showPage: function () {
-        var $slide1 = $('.slide1'),
-            $loading = $('.loading-content'),
+        var me = this,
             $music = $('.music');
 
         //延时1s确保页面重绘完成
         setTimeout(function () {
             //显示欢迎页(隐藏加载元素)
-            $loading.style.display = 'none';
+            me.convertArray(document.querySelectorAll('.loading-content')).forEach(function (e) {
+                e.style.display = 'none';
+            });
 
             //显示音乐图标
             $music.style.display = 'block';
@@ -271,7 +347,9 @@ var God = {
             //$pagination.style.display = 'block';
 
             //激活可向下滑动
-            $slide1.setAttribute('class', $slide1.getAttribute('class').replace(' swiper-no-swiping', ''));
+            me.convertArray(document.querySelectorAll('.slide1')).forEach(function (e) {
+                e.setAttribute('class', e.getAttribute('class').replace(' swiper-no-swiping', ''));
+            });
         }, 1000)
     },
 
@@ -295,6 +373,60 @@ var God = {
         me.triggerEvent($music, 'touchstart');
 
 
+    },
+
+    //自定义提取url查询字符信息,返回数组
+    getQueryString: function (callback) {
+        var me = this,
+            data = [],
+            str = window.location.search.slice(7);
+
+        try {
+            str = decodeURI(str);
+        } catch (e) {
+            me.showAlert('分享链接失效，请返回重新登录~');
+            console.log('链接参数错误--' + e.message);
+            window.location.pathname = './index.html'
+        }
+
+        data = str.split(';')
+
+        //校验
+        if (data.length == 17) {
+            callback && callback(data);
+        } else {
+            me.showAlert('分享链接失效，请返回重新登录~');
+            window.location.pathname = './index.html'
+        }
+    },
+
+    setQueryString: function () {
+        var str = '',
+            data = [];
+
+        data[0] = 'oauth';
+        data[1] = '脏数据';
+        data[2] = $('.not-share .data1').innerHTML;
+        data[3] = $('.not-share .data2').innerHTML;
+        data[4] = $('.not-share .data3').innerHTML;
+        data[5] = $('.not-share .data4').innerHTML;
+        data[6] = $('.not-share .data5').innerHTML;
+        data[7] = $('.not-share .data6').innerHTML;
+        data[8] = $('.not-share .data7').innerHTML;
+        data[9] = '校验数据'
+        data[10] = $('.not-share .data8').innerHTML + '25';
+        data[11] = $('.not-share .data9').innerHTML;
+        data[12] = $('.not-share .data11').innerHTML;
+        data[13] = $('.not-share .data13').innerHTML;
+        data[14] = $('.not-share .data14').innerHTML;
+        data[15] = $('.not-share .data15').innerHTML;
+        data[16] = '脏数据';
+
+        data.forEach(function (e) {
+            str += (e + ';');
+        });
+
+        return '?share=' + encodeURI(str);
     },
 
     //封装模拟触发事件

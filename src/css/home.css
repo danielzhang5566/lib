@@ -150,7 +150,7 @@ i {
 
 /*箭头*/
 .arrow-container {
-    width: 61px;/*箭头宽度*/
+    width: 61px; /*箭头宽度*/
     margin: 0 auto;
     text-align: initial;
 }
@@ -160,6 +160,21 @@ i {
     bottom: .1rem;
     animation: arrow-animation 1.2s linear infinite;
     -webkit-animation: arrow-animation 1.2s linear infinite;
+}
+
+/*分享页[查看我的]按钮*/
+.show-mine {
+    position: absolute;
+    left: 50%;
+    margin-left: -69px;
+    bottom: 7px;
+    width: 138px;
+    height: 55px;
+    background: url('http://source.igdut.cn/btn_mine.png') 0 0 no-repeat;
+    background-size: 100%;
+    border: none;
+    outline: none;
+    z-index: 9999;
 }
 
 /*1.欢迎页*/
@@ -367,12 +382,55 @@ i {
 
 /*8.结语*/
 .slide8 {
-    background: url('http://source.igdut.cn/bg8_final.png') 0 0;
+    background: url('http://source.igdut.cn/bg8_epilogue.png') 0 0;
     background-size: 100% 100%;
 }
 
 .font-epilogue {
 
+}
+
+.once-again {
+    display: block;
+    position: absolute;
+    left: 26px;
+    bottom: 26px;
+    width: 204px;
+    height: 74px;
+    background: url('http://source.igdut.cn/btn_again.png') 0px 0 no-repeat;
+    background-size: 100%;
+    border: none;
+    outline: none;
+    z-index: 9999;
+}
+
+.share-info {
+    display: block;
+    position: absolute;
+    right: 26px;
+    bottom: 26px;
+    width: 204px;
+    height: 74px;
+    background: url('http://source.igdut.cn/btn_share.png') 0 0 no-repeat;
+    background-size: 100%;
+    border: none;
+    outline: none;
+    z-index: 9999;
+}
+
+.share-guide {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-image: url('http://source.igdut.cn/guide.png');
+    background-repeat: no-repeat;
+    background-size: 75% auto;
+    background-position: top right !important;
+    z-index: 99999;
 }
 
 /*9.尾屏*/
