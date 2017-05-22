@@ -318,7 +318,7 @@ var God = {
         $('.not-share .data5').innerHTML = '《' + data.firstbook + '》';
         $('.not-share .data6').innerHTML = data.grade;
         $('.not-share .data7').innerHTML = data.bookcount;
-        $('.not-share .data8').innerHTML = +data.rankingrade * 100 + '%';
+        $('.not-share .data8').innerHTML = (+data.rankingrade * 100).toFixed(1) + '%';
         $('.not-share .data9').innerHTML = setTitle(data.bookcount);
         setReadingList(data.books, data.booknum);
         $('.not-share .data11').innerHTML = data.favorite.split(',')[0];
