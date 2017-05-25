@@ -13,8 +13,10 @@
     <!--flexible.js-->
     <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/10;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
     <script src="http://source.igdut.cn/swiper.min.js"></script>
+    <script src="http://source.igdut.cn/base64.min.js"></script>
     <script>var loadingImg=["book_loading.gif","bg.png"];for(var i=0;i<loadingImg.length;i++){(function(i){var oImg=new Image();oImg.onload=function(){i++;oImg=null};oImg.src="http://source.igdut.cn/"+loadingImg[i]})(i)};</script>
     <script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?0895274f1e6f336d5ee2999a7dccb5e5";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();</script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <!--微信中开启自动播放音乐(适配ios微信内的情况)-->
     <script>document.addEventListener("WeixinJSBridgeReady",function(){document.getElementsByClassName('audio')[0].play()},false)</script>
 </head>
@@ -28,7 +30,7 @@
                 <p class="font-abc font-position font-welcome" style="display: block">
                     亲爱的朋友
                     <br>
-                    欢迎查看 <span class="data1"></span> 的纪念册
+                    欢迎查看 <span class="data data1"></span> 的纪念册
                 </p>
                 <div class="arrow-container">
                     <img class="arrow" src="http://source.igdut.cn/arrow.png">
@@ -47,7 +49,7 @@
         <div class="swiper-slide slide2">
             <div class="swiper-content">
                 <p class="font-abc font-position font-firsttime">
-                    <i class="data2">
+                    <i class="data data2">
                         <span>2013</span>年<span>9</span>月<span>15</span>日
                     </i>
                     <br>
@@ -66,15 +68,15 @@
         <div class="swiper-slide slide3">
             <div class="swiper-content">
                 <p class="font-abc font-position font-firstbook">
-                    <i class="data3">
+                    <i class="data data3">
                         <span>2013</span>年<span>10</span>月<span>15</span>日
                     </i>
                     <br>
-                    在与图书馆相遇后的第<span class="data4">30</span>天
+                    在与图书馆相遇后的第<span class="data data4">30</span>天
                     <br>
                     Ta借下了第一本书
                     <br>
-                    <span class="data5">《那年花开》</span>
+                    <span class="data data5">《那年花开》</span>
                 </p>
                 <div class="arrow-container">
                     <img class="arrow" src="http://source.igdut.cn/arrow.png">
@@ -85,13 +87,13 @@
         <div class="swiper-slide slide4">
             <div class="swiper-content">
                 <p class="font-abc font-position font-total">
-                    大学<span class="data6">4</span>年
+                    大学<span class="data data6">4</span>年
                     <br>
-                    Ta总共借了<span class="data7">176</span>本书
+                    Ta总共借了<span class="data data7">176</span>本书
                     <br>
-                    超越了<span class="data8">85%</span>的同届生
+                    超越了<span class="data data8">85%</span>的同届生
                     <br>
-                    获得称号--<span class="data9">"工大学霸"</span>
+                    获得称号--<span class="data data9">"工大学霸"</span>
                 </p>
                 <div class="arrow-container">
                     <img class="arrow" src="http://source.igdut.cn/arrow.png">
@@ -107,11 +109,11 @@
         <div class="swiper-slide slide6">
             <div class="swiper-content">
                 <p class="font-abc font-position font-interest">
-                    Ta比较喜欢的是<span class="data11">文学类</span>的书
+                    Ta比较喜欢的是<span class="data data11">文学类</span>的书
                     <br>
-                    在Ta借的<span class="data12">176</span>本书里
+                    在Ta借的<span class="data data12">176</span>本书里
                     <br>
-                    有<span class="data13">100</span>本是属于这种类型的
+                    有<span class="data data13">100</span>本是属于这种类型的
                 </p>
                 <div class="arrow-container">
                     <img class="arrow" src="http://source.igdut.cn/arrow.png">
@@ -122,13 +124,13 @@
         <div class="swiper-slide slide7">
             <div class="swiper-content">
                 <p class="font-abc font-position font-lastbook">
-                    <i class="data14">
+                    <i class="data data14">
                         在<span>2017</span>年的<span>4</span>月<span>15</span>日
                     </i>
                     <br>
                     Ta借了最后一本书
                     <br>
-                    <span class="data15">《盛夏年华》</span>
+                    <span class="data data15">《盛夏年华》</span>
                     <br>
                     这本书将永远留在Ta的记忆里
                 </p>
@@ -172,7 +174,7 @@
                     <br>
                     <br>
                     <br>
-                    图书馆X毕业纪念册项目组
+                    广东工业大学图书馆 X 毕业纪念册项目组
                     <br>
                     倾情贡献
                     <br>
@@ -195,7 +197,7 @@
         <div class="swiper-slide slide1 swiper-no-swiping" style="display: block">
             <div class="swiper-content">
                 <p class="font-abc font-position font-welcome" style="display: block">
-                    亲爱的 <span class="data1"></span>
+                    亲爱的 <span class="data data1"></span>
                     <br>
                     欢迎来到图书馆毕业纪念册
                 </p>
@@ -216,7 +218,7 @@
         <div class="swiper-slide slide2">
             <div class="swiper-content">
                 <p class="font-abc font-position font-firsttime">
-                    <i class="data2">
+                    <i class="data data2">
                         <span>2013</span>年<span>9</span>月<span>15</span>日
                     </i>
                     <br>
@@ -235,15 +237,15 @@
         <div class="swiper-slide slide3">
             <div class="swiper-content">
                 <p class="font-abc font-position font-firstbook">
-                    <i class="data3">
+                    <i class="data data3">
                         <span>2013</span>年<span>10</span>月<span>15</span>日
                     </i>
                     <br>
-                    在与图书馆相遇后的第<span class="data4">30</span>天
+                    在与图书馆相遇后的第<span class="data data4">30</span>天
                     <br>
                     我借下了第一本书
                     <br>
-                    <span class="data5">《那年花开》</span>
+                    <span class="data data5">《那年花开》</span>
                 </p>
                 <div class="arrow-container">
                     <img class="arrow" src="http://source.igdut.cn/arrow.png">
@@ -254,13 +256,13 @@
         <div class="swiper-slide slide4">
             <div class="swiper-content">
                 <p class="font-abc font-position font-total">
-                    大学<span class="data6">4</span>年
+                    大学<span class="data data6">4</span>年
                     <br>
-                    我总共借了<span class="data7">176</span>本书
+                    我总共借了<span class="data data7">176</span>本书
                     <br>
-                    超越了<span class="data8">85%</span>的同届生
+                    超越了<span class="data data8">85%</span>的同届生
                     <br>
-                    获得称号--<span class="data9">"工大学霸"</span>
+                    获得称号--<span class="data data9">"工大学霸"</span>
                 </p>
                 <div class="arrow-container">
                     <img class="arrow" src="http://source.igdut.cn/arrow.png">
@@ -298,11 +300,11 @@
         <div class="swiper-slide slide6">
             <div class="swiper-content">
                 <p class="font-abc font-position font-interest">
-                    我比较喜欢的是<span class="data11">文学类</span>的书
+                    我比较喜欢的是<span class="data data11">文学类</span>的书
                     <br>
-                    在我借的<span class="data12">176</span>本书里
+                    在我借的<span class="data data12">176</span>本书里
                     <br>
-                    有<span class="data13">100</span>本是属于这种类型的
+                    有<span class="data data13">100</span>本是属于这种类型的
                 </p>
                 <div class="arrow-container">
                     <img class="arrow" src="http://source.igdut.cn/arrow.png">
@@ -313,13 +315,13 @@
         <div class="swiper-slide slide7">
             <div class="swiper-content">
                 <p class="font-abc font-position font-lastbook">
-                    <i class="data14">
+                    <i class="data data14">
                         在<span>2017</span>年的<span>4</span>月<span>15</span>日
                     </i>
                     <br>
                     我借了最后一本书
                     <br>
-                    <span class="data15">《盛夏年华》</span>
+                    <span class="data data15">《盛夏年华》</span>
                     <br>
                     它将永远留在我的记忆里
                 </p>
@@ -366,7 +368,7 @@
                     <br>
                     <br>
                     <br>
-                    图书馆X毕业纪念册项目组
+                    广东工业大学图书馆 X 毕业纪念册项目组
                     <br>
                     倾情贡献
                     <br>

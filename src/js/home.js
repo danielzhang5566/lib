@@ -32,7 +32,9 @@ var God = {
             $showMine = $('.show-mine'),
             $again = $('.once-again'),
             $share = $('.share-info'),
-            $showGuide = $('.share-guide');
+            $showGuide = $('.share-guide'),
+            $music = $('.music'),
+            $firstPageText = $('.not-share .font-welcome');
 
         //设置全屏
         me.setPageSize();
@@ -48,60 +50,56 @@ var God = {
                 }
 
                 //先把所有页面的文字隐藏
-                me.convertArray(document.querySelectorAll('.font-abc')).forEach(function (element) {
-                    element.style.display = 'none';
+                me.convertArray(document.querySelectorAll('.font-abc')).forEach(function (ele) {
+                    ele.style.display = 'none';
                 });
 
                 if (swiper.slides[swiper.activeIndex].querySelector('.font-abc')) { //当前页面,文字显示
                     swiper.slides[swiper.activeIndex].querySelector('.font-abc').style.display = 'block';
                 }
 
-                if (swiper.activeIndex == 0) { //滑到了第一页
-                }
-                if (swiper.activeIndex != 0) { //滑走第一页
-                }
-
                 if (swiper.activeIndex == 4) { //滑到了第五页
-                    me.convertArray($('.borrowlist-container').querySelectorAll('.font-abc')).forEach(function (el) {
-                        el.style.display = 'block';
+                    me.convertArray($('.borrowlist-container').querySelectorAll('.font-abc')).forEach(function (ele) {
+                        ele.style.display = 'block';
                     });
                 }
                 if (swiper.activeIndex != 4) { //滑走第五页
-                    me.convertArray($('.borrowlist-container').querySelectorAll('.font-abc')).forEach(function (el) {
-                        el.style.display = 'none';
+                    me.convertArray($('.borrowlist-container').querySelectorAll('.font-abc')).forEach(function (ele) {
+                        ele.style.display = 'none';
                     });
                 }
             }
         });
 
-        //查看我的
+        //点击[查看我的]
         $showMine.addEventListener('touchstart', function () {
             window.location.pathname = './index.html'
         });
 
-        //再看一遍
+        //点击[再看一遍]
         $again.addEventListener('touchstart', function () {
-            globalSwiper.forEach(function (e) {
-                e.slideTo(0, 1500, false)
-            })
+            globalSwiper.forEach(function (ele) {
+                ele.slideTo(0, 1500, false)
+            });
+            $firstPageText.style.display = 'block';
         });
 
-        //分享给朋友
+        //点击[分享给朋友]
         $share.addEventListener('touchstart', function () {
             //弹出分享引导蒙版
             $showGuide.style.display = 'block';
-
-            //if(weixin) {  //如果是微信的情况下
-            //    var search = me.setQueryString();
-            //}
+            //隐藏音乐图标
+            $music.style.display = 'none';
 
         });
 
-        //分享蒙版
+        //点击[分享蒙版]
         $showGuide.addEventListener('touchstart', function () {
+            //隐藏分享引导蒙版
             $showGuide.style.display = 'none';
+            //显示音乐图标
+            $music.style.display = 'block';
         });
-
 
         console.log('初始化页面成功')
     },
@@ -116,12 +114,12 @@ var God = {
             els = document.querySelectorAll('.swiper-content'),
             scale = designHeight / designWidth;
 
-        me.convertArray(els).forEach(function (el) {
-            el.style.width = designWidth + 'px';
-            el.style.height = designHeight + 'px';
-            el.style.position = 'absolute';
-            el.style.top = '50%';
-            el.style.left = '50%';
+        me.convertArray(els).forEach(function (ele) {
+            ele.style.width = designWidth + 'px';
+            ele.style.height = designHeight + 'px';
+            ele.style.position = 'absolute';
+            ele.style.top = '50%';
+            ele.style.left = '50%';
             var targetScaleX = docWidth / designWidth,
                 targetScaleY = docHeight / designHeight;
             if (docScale >= scale) {
@@ -129,15 +127,15 @@ var God = {
             } else {
                 // targetScale = docHeight / designHeight;
             }
-            el.style.transformOrigin = '0 0';
-            el.style.transform = 'scale(' + targetScaleX + ',' + targetScaleY + ')translate(-50%, -50%)';
+            ele.style.transformOrigin = '0 0';
+            ele.style.transform = 'scale(' + targetScaleX + ',' + targetScaleY + ')translate(-50%, -50%)';
         });
     },
 
     //图片预加载
     loadImg: function () {
         var me = this,
-            imgList = ['bg1_welcome.png', 'bg2_firsttime.png', 'bg3_firstbook.png', 'bg4_total.png', 'bg6_interest.png', 'bg7_lastbook.png', 'bg8_final.png'];
+            imgList = ['bg1_welcome.png', 'bg2_firsttime.png', 'bg3_firstbook.png', 'bg4_total.png', 'bg6_interest.png', 'bg7_lastbook.png', 'bg8_epilogue.png'];
 
         var imgLocation = 'http://source.igdut.cn/',
         //imgLocation = window.location.origin + '/img/',
@@ -150,8 +148,8 @@ var God = {
             oneImg.src = imgLocation + imgList[i];
             oneImg.onload = function () {
                 successCount++;
-                me.convertArray(document.querySelectorAll('.progress')).forEach(function (e) {
-                    e.innerHTML = Math.floor(successCount / len * 100) + '%';
+                me.convertArray(document.querySelectorAll('.progress')).forEach(function (ele) {
+                    ele.innerHTML = Math.floor(successCount / len * 100) + '%';
                 });
 
                 //所有图片成功加载
@@ -171,16 +169,16 @@ var God = {
     userData: function () {
         var me = this,
             search = window.location.search,
-            $notShare = $('.not-share'),
-            $isShare = $('.is-share');
+            $notShare = $('.not-share'),//[B个人登录页面]DOM
+            $isShare = $('.is-share');//[A分享页面]DOM
 
         //判断是否分享页面
-        if (search.indexOf('share=') == true) { //分享页面
-            me.getQueryString(function (data) {
+        if (search.indexOf('share=') == true) { //[A分享页面]
+            me.getQueryString(function (userInfoArr) {
                 $notShare.style.display = 'none';
-                me.fillShareData(data);
+                me.fillShareData(userInfoArr);
             })
-        } else {                                 //个人登录页面
+        } else {                                 //[B个人登录页面]
             $isShare.style.display = 'none';
             me.ajax('POST', 'cmd=getinfo', './easy.php', function (data) {
                 switch (data.code) {
@@ -191,7 +189,11 @@ var God = {
                         break;
                     case 1:
                         console.log('获取信息成功');
-                        me.fillRequestData(data.msg)
+                        //填数据
+                        me.fillRequestData(data.msg, function (userInfo) {
+                            //回调执行微信操作
+                            me.wechatAction(userInfo)
+                        })
                         //如果需要判断用户类型,换成:
                         //userType(data.msg);
                         break;
@@ -217,27 +219,27 @@ var God = {
              me.fillRequestData(msg);
              }
              */
+
         }
     },
 
-    fillShareData: function (data) {
-        $('.is-share .data1').innerHTML = data[2];
-        $('.is-share .data2').innerHTML = data[3];
-        $('.is-share .data3').innerHTML = data[4];
-        $('.is-share .data4').innerHTML = data[5];
-        $('.is-share .data5').innerHTML = data[6];
-        $('.is-share .data6').innerHTML = data[7];
-        $('.is-share .data7').innerHTML = data[8];
-        $('.is-share .data8').innerHTML = data[10];
-        $('.is-share .data9').innerHTML = data[11];
-        $('.is-share .data11').innerHTML = data[12];
-        $('.is-share .data12').innerHTML = data[8];
-        $('.is-share .data13').innerHTML = data[13];
-        $('.is-share .data14').innerHTML = data[14];
-        $('.is-share .data15').innerHTML = data[15];
+    //[A分享页]的填数据
+    fillShareData: function (userInfoArr) {
+        var me = this;
+
+        //填数据进DOM(这里拿到14个.data)
+        me.convertArray(document.querySelectorAll('.is-share .data')).forEach(function (ele, index) {
+            ele.innerHTML = userInfoArr[index];
+        });
+
+        document.title = '2017 | 馆藏记忆 一一 ' + userInfoArr[0] + '的图书馆时光'
     },
 
-    fillRequestData: function (data) {
+    //[B登录页]的填数据
+    fillRequestData: function (data, callback) {
+        var me = this,
+            userInfo = [];
+
         //1.先处理一下后台传过来的数据
 
         var setTime1 = function (time) {
@@ -310,23 +312,33 @@ var God = {
         }
 
 
-        //2.然后再填进DOM
-        $('.not-share .data1').innerHTML = data.name;
-        $('.not-share .data2').innerHTML = setTime1(data.entertime);
-        $('.not-share .data3').innerHTML = setTime1(data.firstbooktime);
-        $('.not-share .data4').innerHTML = data.gap;
-        $('.not-share .data5').innerHTML = '《' + data.firstbook + '》';
-        $('.not-share .data6').innerHTML = data.grade;
-        $('.not-share .data7').innerHTML = data.bookcount;
-        $('.not-share .data8').innerHTML = (+data.rankingrade * 100).toFixed(1) + '%';
-        $('.not-share .data9').innerHTML = setTitle(data.bookcount);
-        setReadingList(data.books, data.booknum);
-        $('.not-share .data11').innerHTML = data.favorite.split(',')[0];
-        $('.not-share .data12').innerHTML = data.bookcount;
-        $('.not-share .data13').innerHTML = data.favorite.split(',')[1];
-        $('.not-share .data14').innerHTML = setTime2(data.lastbooktime);
-        $('.not-share .data15').innerHTML = '《' + data.lastbook + '》';
+        //整理格式,存进数组(14个数据项)
+        userInfo[0] = data.name;
+        userInfo[1] = setTime1(data.entertime);
+        userInfo[2] = setTime1(data.firstbooktime);
+        userInfo[3] = data.gap;
+        userInfo[4] = '《' + data.firstbook + '》';
+        userInfo[5] = data.grade;
+        userInfo[6] = data.bookcount;
+        userInfo[7] = (+data.rankingrade * 100).toFixed(1) + '%';
+        userInfo[8] = setTitle(data.bookcount);
+        userInfo[9] = data.favorite.split(',')[0];
+        userInfo[10] = data.bookcount;
+        userInfo[11] = data.favorite.split(',')[1];
+        userInfo[12] = setTime2(data.lastbooktime);
+        userInfo[13] = '《' + data.lastbook + '》';
 
+
+        //2.然后再填进DOM(这里拿到14个.data)
+        me.convertArray(document.querySelectorAll('.not-share .data')).forEach(function (ele, index) {
+            ele.innerHTML = userInfo[index];
+        });
+        //这里补充.data10--借阅书单
+        setReadingList(data.books, data.booknum);
+
+
+        //填完数据执行微信操作
+        callback && callback(userInfo);
     },
 
     showPage: function () {
@@ -336,8 +348,8 @@ var God = {
         //延时1s确保页面重绘完成
         setTimeout(function () {
             //显示欢迎页(隐藏加载元素)
-            me.convertArray(document.querySelectorAll('.loading-content')).forEach(function (e) {
-                e.style.display = 'none';
+            me.convertArray(document.querySelectorAll('.loading-content')).forEach(function (ele) {
+                ele.style.display = 'none';
             });
 
             //显示音乐图标
@@ -347,8 +359,8 @@ var God = {
             //$pagination.style.display = 'block';
 
             //激活可向下滑动
-            me.convertArray(document.querySelectorAll('.slide1')).forEach(function (e) {
-                e.setAttribute('class', e.getAttribute('class').replace(' swiper-no-swiping', ''));
+            me.convertArray(document.querySelectorAll('.slide1')).forEach(function (ele) {
+                ele.setAttribute('class', ele.getAttribute('class').replace(' swiper-no-swiping', ''));
             });
         }, 1000)
     },
@@ -375,58 +387,155 @@ var God = {
 
     },
 
-    //自定义提取url查询字符信息,返回数组
+    //提取url查询字符信息,回调函数为启用分享页的操作
     getQueryString: function (callback) {
         var me = this,
-            data = [],
-            str = window.location.search.slice(7);
+            urlUserInfoArr = [],
+            urlUserInfoStr = window.location.href.split('?')[1].split('&')[0].split('=')[1];
 
         try {
-            str = decodeURI(str);
+            //Base64解码
+            urlUserInfoStr = Base64.decode(urlUserInfoStr);
         } catch (e) {
-            me.showAlert('分享链接失效，请返回重新登录~');
+            me.showAlert('B8:分享链接失效，请返回重新登录~');
             console.log('链接参数错误--' + e.message);
             window.location.pathname = './index.html'
         }
 
-        data = str.split(';')
+        urlUserInfoArr = urlUserInfoStr.split(';')
 
-        //校验
-        if (data.length == 17) {
-            callback && callback(data);
+        //校验,正确的是14个数据项
+        if (urlUserInfoArr.length == 14) {
+            callback && callback(urlUserInfoArr);
         } else {
-            me.showAlert('分享链接失效，请返回重新登录~');
+            me.showAlert('B9:分享链接失效，请返回重新登录~');
             window.location.pathname = './index.html'
         }
     },
 
-    setQueryString: function () {
-        var str = '',
-            data = [];
+    //设置分享链接数据,示例:'?share=xxx',注意后面的xxx值经过base64编码
+    //userInfo为读者数据的数组,含14个数据项
+    setQueryString: function (userInfo) {
+        var str = '';
 
-        data[0] = 'oauth';
-        data[1] = '脏数据';
-        data[2] = $('.not-share .data1').innerHTML;
-        data[3] = $('.not-share .data2').innerHTML;
-        data[4] = $('.not-share .data3').innerHTML;
-        data[5] = $('.not-share .data4').innerHTML;
-        data[6] = $('.not-share .data5').innerHTML;
-        data[7] = $('.not-share .data6').innerHTML;
-        data[8] = $('.not-share .data7').innerHTML;
-        data[9] = '校验数据'
-        data[10] = $('.not-share .data8').innerHTML + '25';
-        data[11] = $('.not-share .data9').innerHTML;
-        data[12] = $('.not-share .data11').innerHTML;
-        data[13] = $('.not-share .data13').innerHTML;
-        data[14] = $('.not-share .data14').innerHTML;
-        data[15] = $('.not-share .data15').innerHTML;
-        data[16] = '脏数据';
+        userInfo.forEach(function (ele, index) {
+            if (index != 13) {
+                str += (ele + ';');
+            } else {
+                str += (ele);
+            }
 
-        data.forEach(function (e) {
-            str += (e + ';');
         });
 
-        return '?share=' + encodeURI(str);
+        return '?share=' + Base64.encode(str);
+    },
+
+    //执行微信分享操作
+    //注意只有在[登录页]才会有这一步,[分享页]不进行分享设置
+    wechatAction: function (userInfo) {
+        var me = this;
+
+        if (me.isWechat()) {
+            console.log('微信内,开始执行分享设置');
+            var url = window.location.href.split('#')[0],
+                param = 'cmd=wx&url=' + Base64.encode(url);
+
+            me.ajax('POST', param, './wechat.php', function (data) {
+                switch (data.code) {
+                    case 1:
+                        //传入微信分享配置和14个基础数据项
+                        me.setWechatConf(data.msg, userInfo);
+                        break;
+                    default:
+                        me.showAlert('B5:设置分享失败,请稍后再试~');
+                        console.log('遇到未知错误--' + data.code + data.msg);
+                        break;
+                }
+            });
+        }
+    },
+
+    isWechat: function () {
+        if ((navigator.userAgent.indexOf("MicroMessenger") >= 0) && window.wx) {
+            return true;
+        } else {
+            return false;
+        }
+    },
+
+    setWechatConf: function (conf, userInfo) {
+        var me = this,
+            url = window.location.href.split('?')[0] + me.setQueryString(userInfo),//拿到当前页面不带参数的url,再加上shareInfo
+            title = '2017 | 馆藏记忆 一一 ' + $('.not-share .data1').innerHTML + '的图书馆时光',
+            desc = '欢迎来到2017广东工业大学图书馆毕业纪念册❤',
+            imgUrl = 'http://source.igdut.cn/login_logo.jpg';
+
+        wx.config({
+            debug: false,
+            appId: conf.appid,
+            timestamp: conf.timestamp,
+            nonceStr: conf.nonceStr,
+            signature: conf.signature,
+            jsApiList: [
+                'onMenuShareTimeline',   //分享到朋友圈
+                'onMenuShareAppMessage', //分享给朋友
+                'onMenuShareQQ'          //分享到QQ
+            ]
+        });
+
+        wx.ready(function () {
+            //分享到朋友圈
+            wx.onMenuShareTimeline({
+                title: title, // 分享标题
+                link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: imgUrl, // 分享图标
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    console.log('分享成功')
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+
+            //分享给朋友
+            wx.onMenuShareAppMessage({
+                title: title, // 分享标题
+                desc: desc, // 分享描述
+                link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: imgUrl, // 分享图标
+                type: '', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    console.log('分享成功')
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+
+            //分享到QQ
+            wx.onMenuShareQQ({
+                title: title, // 分享标题
+                desc: desc, // 分享描述
+                link: url, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    console.log('分享成功')
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+
+        });
+
+        wx.error(function (res) {
+            me.showAlert('B6:设置分享失败,请稍后再试~');
+            console.log('获取分享信息失败--' + res);
+        });
     },
 
     //封装模拟触发事件
@@ -471,14 +580,14 @@ var God = {
                     var data = JSON.parse(xhr.responseText);
                     callback && callback(data);
                 } else {
-                    me.showAlert('A2:出错啦~请稍后登录呗~');
+                    me.showAlert('B3:出错啦~请稍后登录呗~');
                     console.log('There was a problem with the request--status code:' + xhr.status);
                     location.reload();
                 }
             }
         }
         xhr.onerror = function (e) {
-            me.showAlert('A3:出错啦~请稍后登录呗~');
+            me.showAlert('B4:出错啦~请稍后登录呗~');
             console.log(e);
             location.reload();
         };
