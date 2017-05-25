@@ -577,7 +577,12 @@ var God = {
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-                    var data = JSON.parse(xhr.responseText);
+                    try {
+                        var data = JSON.parse(xhr.responseText);
+                    } catch (e) {
+                        me.showAlert('Z1:系统出错,请联系管理员~');
+                        console.log('后台响应体不正常:' + xhr.responseText);
+                    }
                     callback && callback(data);
                 } else {
                     me.showAlert('B3:出错啦~请稍后登录呗~');
