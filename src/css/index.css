@@ -41,13 +41,16 @@ input[type="button"], input[type="submit"], input[type="reset"] {
 .login-box {
     width: 5rem;
     margin: auto;
-    padding-bottom: 2rem;
 }
 
 .login-img {
-    width: 4rem;
+    width: 3.6rem;
     margin: 0 auto;
     display: block;
+}
+
+.login-form {
+    padding: .5rem 0 2rem 0;
 }
 
 .login-input {

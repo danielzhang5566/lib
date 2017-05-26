@@ -118,6 +118,7 @@ i {
     height: 100%;
 }
 
+/*水平垂直居中(还是不用rem了吧)*/
 .center {
     width: 300px; /*元素的宽度*/
     height: 260px; /*元素的高度(图片200+文字60)*/
@@ -126,6 +127,12 @@ i {
     margin-left: -150px; /*值的大小等于元素宽度的一半*/
     top: 50%; /*配合margin-top的负值实现垂直居中*/
     margin-top: -130px; /*值的大小等于元素高度的一半*/
+}
+
+/*水平居中*/
+.horizontal-center {
+    display: flex;
+    justify-content: center;
 }
 
 .loading-book {
@@ -164,13 +171,12 @@ i {
 }
 
 /*分享页[查看我的]按钮*/
+/*按钮尺寸:289*112*/
 .show-mine {
     position: absolute;
-    left: 50%;
-    margin-left: -69px;
-    bottom: 7px;
-    width: 138px;
-    height: 55px;
+    bottom: .2rem;
+    width: 3.5rem;
+    height: 1.36rem;
     background: url('http://source.igdut.cn/1.4/btn_mine.png') 0 0 no-repeat;
     background-size: 100%;
     border: none;
@@ -364,9 +370,17 @@ i {
 .hand-tip {
     position: absolute;
     width: 100%;
-    bottom: 1rem;
+    bottom: 2rem;
     text-align: center;
     z-index: 9999;
+}
+
+[data-dpr="2"] .hand-tip {
+    bottom: .8rem;
+}
+
+[data-dpr="3"] .hand-tip {
+    bottom: .5rem;
 }
 
 /*6.借阅兴趣*/
@@ -399,13 +413,14 @@ i {
 
 }
 
+/*按钮尺寸:289*121*/
 .once-again {
     display: block;
     position: absolute;
-    left: 26px;
-    bottom: 26px;
-    width: 204px;
-    height: 74px;
+    left: 1rem;
+    bottom: .4rem;
+    width: 38%; /*注意按钮父元素swiper-content宽度被设置为750px,absolute这里用百分比比较好*/
+    height: 8%;
     background: url('http://source.igdut.cn/1.4/btn_again.png') 0px 0 no-repeat;
     background-size: 100%;
     border: none;
@@ -413,18 +428,35 @@ i {
     z-index: 9999;
 }
 
+[data-dpr="2"] .once-again {
+    left: .5rem;
+}
+
+[data-dpr="3"] .once-again {
+    left: .2rem;
+}
+
+/*按钮尺寸:289*121*/
 .share-info {
     display: block;
     position: absolute;
-    right: 26px;
-    bottom: 26px;
-    width: 204px;
-    height: 74px;
+    right: 1rem;
+    bottom: .4rem;
+    width: 38%;
+    height: 8%;
     background: url('http://source.igdut.cn/1.4/btn_share.png') 0 0 no-repeat;
     background-size: 100%;
     border: none;
     outline: none;
     z-index: 9999;
+}
+
+[data-dpr="2"] .share-info {
+    right: .5rem;
+}
+
+[data-dpr="3"] .share-info {
+    right: .2rem;
 }
 
 .share-guide {
@@ -456,10 +488,10 @@ i {
 .music {
     position: absolute;
     display: none;
-    top: .2rem;
-    right: .2rem;
-    width: 1.2rem;
-    height: 1.2rem;
+    top: .22rem;
+    right: .22rem;
+    width: 1.1rem;
+    height: 1.1rem;
     background: url('http://source.igdut.cn/1.4/icon_music.png') no-repeat;
     background-size: 100%;
     z-index: 200;
