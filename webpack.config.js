@@ -74,10 +74,10 @@ module.exports = {
                 'home'
             ]//只选择加载入口文件 home.js
         }),
-        new HtmlWebpackPlugin({                      //插入css/js标签生成最终pc.html
+        new HtmlWebpackPlugin({                      //插入css/js标签生成最终jump.html
             favicon: './src/favicon.ico',
-            filename: 'pc.html',
-            template: './src/pc.html',
+            filename: 'jump.html',
+            template: './src/jump.html',
             hash: true,//静态资源后加hash
             minify: {
                 removeComments: true,//移除注释
