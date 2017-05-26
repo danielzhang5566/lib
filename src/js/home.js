@@ -248,6 +248,11 @@ var God = {
             var html = '',
                 pages = Math.ceil(books.length / 10);
 
+            //如果是只有一页,隐藏提示左右滑动的手势
+            if (pages == 1) {
+                $('.hand-tip').style.display = 'none'
+            }
+
             //for一次添加一页,i表示当前页
             for (var i = 1; i <= pages; i++) {
                 //每个分页开始计数的书的编号
