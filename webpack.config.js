@@ -6,7 +6,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')//抽离css
 module.exports = {
     entry: {
         index: './src/js/index.js',
-        home: './src/js/home.js'
+        home: './src/js/home.js',
+        //res: './src/js/resources.js'
     },//入口文件
     output: {
         path: path.resolve(__dirname, 'dist'),//打包后的文件存放的地方
@@ -15,28 +16,27 @@ module.exports = {
     },
     module: {
         rules: [
-            {
+            {   //处理css
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: 'css-loader?minimize=true&-url'//带参数压缩css,加-url防止css内图片路径被转化
                 })
-            },//处理css
-            {
+            },
+            {   //处理图片
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: [
-                    'url-loader?limit=10240&name=./img/[name].[ext]',
+                    'url-loader?limit=1&name=./img/[name].[ext]',//小于1byte用url-loader,也就是所有图片,默认不用data-url
                     //https://github.com/tcoopman/image-webpack-loader
                     //第一个optimizationLevel为png图片优化等级,从1到7,等级越高,图片优化程度越好,但是打包所需时间就会越长
                     //第二个optimizationLevel为gif图片优化等级,从1到3
-                    //interlaced是隔行扫描,运行客户端加载图片时先看到模糊的一部分
-                    'image-webpack-loader?{optimizationLevel: 5, interlaced: false, pngquant:{quality: "55-70", speed: 4}, mozjpeg: {quality: 60},gifsicle:{optimizationLevel: 3}}'
+                    'image-webpack-loader?{pngquant:{quality: "55-70", speed: 4},optipng:{optimizationLevel:5}, mozjpeg: {quality: 60},gifsicle:{optimizationLevel: 3}}'
                 ]
-            },//处理图片
-            {
+            },
+            {   //处理font文件
                 test: /\.(woff|woff2|eot|ttf|svg)(\?.*)?$/,
                 loader: 'url-loader?importLoaders=1&limit=1000&name=./font/[name].[ext]'
-            },//处理font文件
+            },
         ]
     },
     plugins: [

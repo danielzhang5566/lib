@@ -14,7 +14,7 @@
     <script>!function(a,b){function c(){var b=f.getBoundingClientRect().width;b/i>540&&(b=540*i);var c=b/10;f.style.fontSize=c+"px",k.rem=a.rem=c}var d,e=a.document,f=e.documentElement,g=e.querySelector('meta[name="viewport"]'),h=e.querySelector('meta[name="flexible"]'),i=0,j=0,k=b.flexible||(b.flexible={});if(g){console.warn("将根据已有的meta标签来设置缩放比例");var l=g.getAttribute("content").match(/initial\-scale=([\d\.]+)/);l&&(j=parseFloat(l[1]),i=parseInt(1/j))}else if(h){var m=h.getAttribute("content");if(m){var n=m.match(/initial\-dpr=([\d\.]+)/),o=m.match(/maximum\-dpr=([\d\.]+)/);n&&(i=parseFloat(n[1]),j=parseFloat((1/i).toFixed(2))),o&&(i=parseFloat(o[1]),j=parseFloat((1/i).toFixed(2)))}}if(!i&&!j){var p=(a.navigator.appVersion.match(/android/gi),a.navigator.appVersion.match(/iphone/gi)),q=a.devicePixelRatio;i=p?q>=3&&(!i||i>=3)?3:q>=2&&(!i||i>=2)?2:1:1,j=1/i}if(f.setAttribute("data-dpr",i),!g)if(g=e.createElement("meta"),g.setAttribute("name","viewport"),g.setAttribute("content","initial-scale="+j+", maximum-scale="+j+", minimum-scale="+j+", user-scalable=no"),f.firstElementChild)f.firstElementChild.appendChild(g);else{var r=e.createElement("div");r.appendChild(g),e.write(r.innerHTML)}a.addEventListener("resize",function(){clearTimeout(d),d=setTimeout(c,300)},!1),a.addEventListener("pageshow",function(a){a.persisted&&(clearTimeout(d),d=setTimeout(c,300))},!1),"complete"===e.readyState?e.body.style.fontSize=12*i+"px":e.addEventListener("DOMContentLoaded",function(){e.body.style.fontSize=12*i+"px"},!1),c(),k.dpr=a.dpr=i,k.refreshRem=c,k.rem2px=function(a){var b=parseFloat(a)*this.rem;return"string"==typeof a&&a.match(/rem$/)&&(b+="px"),b},k.px2rem=function(a){var b=parseFloat(a)/this.rem;return"string"==typeof a&&a.match(/px$/)&&(b+="rem"),b}}(window,window.lib||(window.lib={}));</script>
     <script src="http://source.igdut.cn/swiper.min.js"></script>
     <script src="http://source.igdut.cn/base64.min.js"></script>
-    <script>var loadingImg=["book_loading.gif","bg.png"];for(var i=0;i<loadingImg.length;i++){(function(i){var oImg=new Image();oImg.onload=function(){i++;oImg=null};oImg.src="http://source.igdut.cn/"+loadingImg[i]})(i)};</script>
+    <script>var loadingImg=["pg0_book_loading.gif","global_bg.jpg"];for(var i=0;i<loadingImg.length;i++){(function(i){var oImg=new Image();oImg.onload=function(){i++;oImg=null};oImg.src="http://source.igdut.cn/1.4/"+loadingImg[i]})(i)};</script>
     <script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?0895274f1e6f336d5ee2999a7dccb5e5";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();</script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <!--微信中开启自动播放音乐(适配ios微信内的情况)-->
@@ -33,13 +33,13 @@
                     欢迎查看 <span class="data data1"></span> 的纪念册
                 </p>
                 <div class="arrow-container">
-                    <img class="arrow" src="http://source.igdut.cn/arrow.png">
+                    <img class="arrow" src="http://source.igdut.cn/1.4/icon_arrow.png">
                 </div>
                 <!--下面是加载时显示的内容-->
                 <div class="loading-content">
-                    <img class="loading-bg" src="http://source.igdut.cn/bg.png">
+                    <img class="loading-bg" src="http://source.igdut.cn/1.4/global_bg.jpg">
                     <div class="center">
-                        <img class="loading-book" src="http://source.igdut.cn/book_loading.gif">
+                        <img class="loading-book" src="http://source.igdut.cn/1.4/pg0_book_loading.gif">
                         <p class="progress">0%</p>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                     第一次来到了图书馆
                 </p>
                 <div class="arrow-container">
-                    <img class="arrow" src="http://source.igdut.cn/arrow.png">
+                    <img class="arrow" src="http://source.igdut.cn/1.4/icon_arrow.png">
                 </div>
             </div>
         </div>
@@ -79,7 +79,7 @@
                     <span class="data data5">《那年花开》</span>
                 </p>
                 <div class="arrow-container">
-                    <img class="arrow" src="http://source.igdut.cn/arrow.png">
+                    <img class="arrow" src="http://source.igdut.cn/1.4/icon_arrow.png">
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@
                     获得称号--<span class="data data9">"工大学霸"</span>
                 </p>
                 <div class="arrow-container">
-                    <img class="arrow" src="http://source.igdut.cn/arrow.png">
+                    <img class="arrow" src="http://source.igdut.cn/1.4/icon_arrow.png">
                 </div>
             </div>
         </div>
@@ -116,7 +116,7 @@
                     有<span class="data data13">100</span>本是属于这种类型的
                 </p>
                 <div class="arrow-container">
-                    <img class="arrow" src="http://source.igdut.cn/arrow.png">
+                    <img class="arrow" src="http://source.igdut.cn/1.4/icon_arrow.png">
                 </div>
             </div>
         </div>
@@ -135,7 +135,7 @@
                     这本书将永远留在Ta的记忆里
                 </p>
                 <div class="arrow-container">
-                    <img class="arrow" src="http://source.igdut.cn/arrow.png">
+                    <img class="arrow" src="http://source.igdut.cn/1.4/icon_arrow.png">
                 </div>
             </div>
         </div>
@@ -202,13 +202,13 @@
                     欢迎来到图书馆毕业纪念册
                 </p>
                 <div class="arrow-container">
-                    <img class="arrow" src="http://source.igdut.cn/arrow.png">
+                    <img class="arrow" src="http://source.igdut.cn/1.4/icon_arrow.png">
                 </div>
                 <!--下面是加载时显示的内容-->
                 <div class="loading-content">
-                    <img class="loading-bg" src="http://source.igdut.cn/bg.png">
+                    <img class="loading-bg" src="http://source.igdut.cn/1.4/global_bg.jpg">
                     <div class="center">
-                        <img class="loading-book" src="http://source.igdut.cn/book_loading.gif">
+                        <img class="loading-book" src="http://source.igdut.cn/1.4/pg0_book_loading.gif">
                         <p class="progress">0%</p>
                     </div>
                 </div>
@@ -229,7 +229,7 @@
                     第一次来到了图书馆
                 </p>
                 <div class="arrow-container">
-                    <img class="arrow" src="http://source.igdut.cn/arrow.png">
+                    <img class="arrow" src="http://source.igdut.cn/1.4/icon_arrow.png">
                 </div>
             </div>
         </div>
@@ -248,7 +248,7 @@
                     <span class="data data5">《那年花开》</span>
                 </p>
                 <div class="arrow-container">
-                    <img class="arrow" src="http://source.igdut.cn/arrow.png">
+                    <img class="arrow" src="http://source.igdut.cn/1.4/icon_arrow.png">
                 </div>
             </div>
         </div>
@@ -265,7 +265,7 @@
                     获得称号--<span class="data data9">"工大学霸"</span>
                 </p>
                 <div class="arrow-container">
-                    <img class="arrow" src="http://source.igdut.cn/arrow.png">
+                    <img class="arrow" src="http://source.igdut.cn/1.4/icon_arrow.png">
                 </div>
             </div>
         </div>
@@ -292,7 +292,7 @@
                     </div>
                 </div>
                 <div class="arrow-container">
-                    <img class="arrow" src="http://source.igdut.cn/arrow.png">
+                    <img class="arrow" src="http://source.igdut.cn/1.4/icon_arrow.png">
                 </div>
             </div>
         </div>
@@ -307,7 +307,7 @@
                     有<span class="data data13">100</span>本是属于这种类型的
                 </p>
                 <div class="arrow-container">
-                    <img class="arrow" src="http://source.igdut.cn/arrow.png">
+                    <img class="arrow" src="http://source.igdut.cn/1.4/icon_arrow.png">
                 </div>
             </div>
         </div>
@@ -326,7 +326,7 @@
                     它将永远留在我的记忆里
                 </p>
                 <div class="arrow-container">
-                    <img class="arrow" src="http://source.igdut.cn/arrow.png">
+                    <img class="arrow" src="http://source.igdut.cn/1.4/icon_arrow.png">
                 </div>
             </div>
         </div>

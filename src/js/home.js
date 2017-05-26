@@ -1,23 +1,4 @@
 require('../css/home.css')
-//require('../font/zhanku.ttf')
-
-//require('../img/book_loading.gif')
-//require('../img/bg.png')
-//require('../img/bg1_welcome.png')
-//require('../img/bg2_firsttime.png')
-//require('../img/bg3_firstbook.png')
-//require('../img/bg4_total.png')
-//require('../img/bg6_interest.png')
-//require('../img/bg7_lastbook.png')
-//require('../img/bg8_epilogue.png')
-//require('../img/arrow.png')
-//require('../img/music_close.png')
-//require('../img/music_play.png')
-//require('../img/btn_mine.png')
-//require('../img/btn_again.png')
-//require('../img/btn_share.png')
-//require('../img/guide.png')
-
 
 var God = {
     init: function () {
@@ -135,9 +116,9 @@ var God = {
     //图片预加载
     loadImg: function () {
         var me = this,
-            imgList = ['bg1_welcome.png', 'bg2_firsttime.png', 'bg3_firstbook.png', 'bg4_total.png', 'bg6_interest.png', 'bg7_lastbook.png', 'bg8_epilogue.png'];
+            imgList = ['pg1_welcome.png', 'pg2_firsttime.png', 'pg3_firstbook.png', 'pg4_total.png', 'pg5_booklist_bottom.png', 'pg6_interest.png', 'pg7_lastbook.png', 'pg8_epilogue.png', 'pg9_final.png'];
 
-        var imgLocation = 'http://source.igdut.cn/',
+        var imgLocation = 'http://source.igdut.cn/1.4/',
         //imgLocation = window.location.origin + '/img/',
         //$pagination = $('.swiper-pagination-bullets'),
             successCount = 0,
@@ -468,7 +449,7 @@ var God = {
             url = window.location.href.split('?')[0] + me.setQueryString(userInfo),//拿到当前页面不带参数的url,再加上shareInfo
             title = '2017 | 馆藏记忆 一一 ' + $('.not-share .data1').innerHTML + '的图书馆时光',
             desc = '欢迎来到2017广东工业大学图书馆毕业纪念册❤',
-            imgUrl = 'http://source.igdut.cn/login_logo.jpg';
+            imgUrl = 'http://source.igdut.cn/1.4/login_logo.jpg';
 
         wx.config({
             debug: false,

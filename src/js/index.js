@@ -1,7 +1,7 @@
-//用到的样式\图片\字体等静态资源需要在这里require
-//否则不会拷贝到dist目录
+//项目需要require的资源:图片,字体等
+require('./resources.js')
+
 require('../css/index.css')
-//require('../img/login_logo.jpg')
 
 var God = {
     init: function () {

@@ -2,6 +2,7 @@ html, body {
     overflow: hidden;
     width: 100%;
     height: 100%;
+    background: url("http://source.igdut.cn/1.4/global_bg.jpg");
 }
 
 li {
@@ -170,7 +171,7 @@ i {
     bottom: 7px;
     width: 138px;
     height: 55px;
-    background: url('http://source.igdut.cn/btn_mine.png') 0 0 no-repeat;
+    background: url('http://source.igdut.cn/1.4/btn_mine.png') 0 0 no-repeat;
     background-size: 100%;
     border: none;
     outline: none;
@@ -179,7 +180,7 @@ i {
 
 /*1.欢迎页*/
 .slide1 {
-    background: url('http://source.igdut.cn/bg1_welcome.png') 0 0;
+    background: url('http://source.igdut.cn/1.4/pg1_welcome.png') 0 0;
     background-size: 100% 100%;
     text-align: center;
 }
@@ -201,7 +202,7 @@ i {
 
 /*2.第一次来到图书馆*/
 .slide2 {
-    background: url('http://source.igdut.cn/bg2_firsttime.png') 0 0;
+    background: url('http://source.igdut.cn/1.4/pg2_firsttime.png') 0 0;
     background-size: 100% 100%;
 }
 
@@ -213,7 +214,7 @@ i {
 
 /*3.借的第一本书*/
 .slide3 {
-    background: url('http://source.igdut.cn/bg3_firstbook.png') 0 0;
+    background: url('http://source.igdut.cn/1.4/pg3_firstbook.png') 0 0;
     background-size: 100% 100%;
 }
 
@@ -223,7 +224,7 @@ i {
 
 /*4.借阅总量*/
 .slide4 {
-    background: url('http://source.igdut.cn/bg4_total.png') 0 0;
+    background: url('http://source.igdut.cn/1.4/pg4_total.png') 0 0;
     background-size: 100% 100%;
 }
 
@@ -233,7 +234,7 @@ i {
 
 /*5.借阅清单*/
 .slide5 {
-    background: url('http://source.igdut.cn/bg.png') 0 0;
+    background: url('http://source.igdut.cn/1.4/global_bg.jpg') 0 0;
     background-size: 100% 100%;
 }
 
@@ -342,7 +343,7 @@ i {
 .h-bottom-style {
     position: absolute;
     width: 100%;
-    background: url(http://source.igdut.cn/booklist_bottom.png) repeat-x;
+    background: url(http://source.igdut.cn/1.4/pg5_booklist_bottom.png) repeat-x;
     background-size: 18rem auto;
     bottom: -0.5rem;
     height: 0.5rem;
@@ -362,7 +363,7 @@ i {
 
 /*6.借阅兴趣*/
 .slide6 {
-    background: url('http://source.igdut.cn/bg6_interest.png') 0 0;
+    background: url('http://source.igdut.cn/1.4/pg6_interest.png') 0 0;
     background-size: 100% 100%;
 }
 
@@ -372,7 +373,7 @@ i {
 
 /*7.借的最后一本书*/
 .slide7 {
-    background: url('http://source.igdut.cn/bg7_lastbook.png') 0 0;
+    background: url('http://source.igdut.cn/1.4/pg7_lastbook.png') 0 0;
     background-size: 100% 100%;
 }
 
@@ -382,7 +383,7 @@ i {
 
 /*8.结语*/
 .slide8 {
-    background: url('http://source.igdut.cn/bg8_epilogue.png') 0 0;
+    background: url('http://source.igdut.cn/1.4/pg8_epilogue.png') 0 0;
     background-size: 100% 100%;
 }
 
@@ -397,7 +398,7 @@ i {
     bottom: 26px;
     width: 204px;
     height: 74px;
-    background: url('http://source.igdut.cn/btn_again.png') 0px 0 no-repeat;
+    background: url('http://source.igdut.cn/1.4/btn_again.png') 0px 0 no-repeat;
     background-size: 100%;
     border: none;
     outline: none;
@@ -411,7 +412,7 @@ i {
     bottom: 26px;
     width: 204px;
     height: 74px;
-    background: url('http://source.igdut.cn/btn_share.png') 0 0 no-repeat;
+    background: url('http://source.igdut.cn/1.4/btn_share.png') 0 0 no-repeat;
     background-size: 100%;
     border: none;
     outline: none;
@@ -426,7 +427,7 @@ i {
     left: 0;
     top: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    background-image: url('http://source.igdut.cn/guide.png');
+    background-image: url('http://source.igdut.cn/1.4/pg8_guide.png');
     background-repeat: no-repeat;
     background-size: 75% auto;
     background-position: top right !important;
@@ -435,7 +436,7 @@ i {
 
 /*9.尾屏*/
 .slide9 {
-    background: url('http://source.igdut.cn/bg.png') 0 0;
+    background: url('http://source.igdut.cn/1.4/pg9_final.png') 0 0;
     background-size: 100% 100%;
 }
 
@@ -451,7 +452,7 @@ i {
     right: .2rem;
     width: 1.2rem;
     height: 1.2rem;
-    background: url('http://source.igdut.cn/music_play.png') no-repeat;
+    background: url('http://source.igdut.cn/1.4/icon_music.png') no-repeat;
     background-size: 100%;
     z-index: 200;
 }
