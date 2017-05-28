@@ -3,14 +3,11 @@ html, body {
     width: 100%;
     height: 100%;
     background: url("http://source.igdut.cn/1.4/global_bg.jpg");
+    background-size: 100% 100%;
 }
 
 li {
     list-style: none;
-}
-
-i {
-    font-style: inherit;
 }
 
 @font-face {
@@ -31,7 +28,7 @@ i {
     -webkit-animation-fill-mode: forwards;
 }
 
-.font-abc span {
+.font-abc .highlight {
     color: #bf1a16;
     font-size: 56px;
     font-weight: 100;
@@ -45,7 +42,7 @@ i {
     font-size: 46px;
 }
 
-[data-dpr="2"] .font-abc span {
+[data-dpr="2"] .font-abc .highlight {
     font-size: 58px;
 }
 
@@ -53,7 +50,7 @@ i {
     font-size: 48px;
 }
 
-[data-dpr="3"] .font-abc span {
+[data-dpr="3"] .font-abc .highlight {
     font-size: 62px;
 }
 
@@ -133,6 +130,9 @@ i {
 .horizontal-center {
     display: flex;
     justify-content: center;
+    position: absolute;
+    width: 100%;
+    bottom: .2rem;
 }
 
 .loading-book {
@@ -173,15 +173,19 @@ i {
 /*分享页[查看我的]按钮*/
 /*按钮尺寸:289*112*/
 .show-mine {
-    position: absolute;
-    bottom: .2rem;
+    display: none;
     width: 3.5rem;
     height: 1.36rem;
-    background: url('http://source.igdut.cn/1.4/btn_mine.png') 0 0 no-repeat;
+    background: url(http://source.igdut.cn/1.4/btn_mine.png) 0 0 no-repeat;
     background-size: 100%;
     border: none;
     outline: none;
     z-index: 9999;
+}
+
+/*分享页[Ta]*/
+.ta {
+    color: #ff5722;
 }
 
 /*1.欢迎页*/
@@ -481,7 +485,23 @@ i {
 }
 
 .font-final {
+    top: 2.777rem;
+}
 
+.link {
+
+}
+
+.author {
+
+}
+
+.thanks {
+    color: #f24e4e;
+}
+
+.email {
+    font-size: 36px;
 }
 
 /*音乐图标*/

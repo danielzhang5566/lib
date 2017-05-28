@@ -15,7 +15,8 @@ var God = {
             $share = $('.share-info'),
             $showGuide = $('.share-guide'),
             $music = $('.music'),
-            $firstPageText = $('.not-share .font-welcome');
+            $firstPageText = $('.not-share .font-welcome'),
+            $showMine = $('.show-mine');
 
         //设置全屏
         me.setPageSize();
@@ -26,25 +27,35 @@ var God = {
             direction: "vertical",
             //pagination: ".swiper-pagination",
             onSlideChangeStart: function (swiper) {
-                if (swiper.activeIndex == swiper.slides.length - 1) { //判断滑到了最后一页
 
-                }
-
-                //先把所有页面的文字隐藏
+                //1.先把所有页面的文字隐藏
                 me.convertArray(document.querySelectorAll('.font-abc')).forEach(function (ele) {
                     ele.style.display = 'none';
                 });
 
-                if (swiper.slides[swiper.activeIndex].querySelector('.font-abc')) { //当前页面,文字显示
+                //2.然后滑到当前页面,文字显示
+                if (swiper.slides[swiper.activeIndex].querySelector('.font-abc')) {
                     swiper.slides[swiper.activeIndex].querySelector('.font-abc').style.display = 'block';
                 }
 
-                if (swiper.activeIndex == 4) { //滑到了第五页
+
+                //滑到了第一页
+                if (swiper.activeIndex == 0) {
+                    $showMine.style.display = 'none'
+                }
+                //滑走第一页
+                if (swiper.activeIndex != 0) {
+                    $showMine.style.display = 'block'
+                }
+
+                //滑到了第五页
+                if (swiper.activeIndex == 4) {
                     me.convertArray($('.borrowlist-container').querySelectorAll('.font-abc')).forEach(function (ele) {
                         ele.style.display = 'block';
                     });
                 }
-                if (swiper.activeIndex != 4) { //滑走第五页
+                //滑走第五页
+                if (swiper.activeIndex != 4) {
                     me.convertArray($('.borrowlist-container').querySelectorAll('.font-abc')).forEach(function (ele) {
                         ele.style.display = 'none';
                     });
@@ -54,7 +65,7 @@ var God = {
 
         //点击[查看我的]
         $showMine.addEventListener('touchstart', function () {
-            window.location.pathname = './index.html'
+            window.location = './home.html'
         });
 
         //点击[再看一遍]
@@ -225,12 +236,12 @@ var God = {
 
         var setTime1 = function (time) {
             var timeArr = time.split('-');
-            return "<span>" + timeArr[0] + "</span>年<span>" + timeArr[1] + "</span>月<span>" + timeArr[2] + "</span>日"
+            return "<span class='highlight'>" + timeArr[0] + "</span>年<span class='highlight'>" + timeArr[1] + "</span>月<span class='highlight'>" + timeArr[2] + "</span>日"
         }
 
         var setTime2 = function (time) {
             var timeArr = time.split('-');
-            return "在<span>" + timeArr[0] + "</span>年的<span>" + timeArr[1] + "</span>月<span>" + timeArr[2] + "</span>日"
+            return "在<span class='highlight'>" + timeArr[0] + "</span>年的<span class='highlight'>" + timeArr[1] + "</span>月<span class='highlight'>" + timeArr[2] + "</span>日"
         }
 
         var setTitle = function (bookcount) {
@@ -454,7 +465,7 @@ var God = {
             url = window.location.href.split('?')[0] + me.setQueryString(userInfo),//拿到当前页面不带参数的url,再加上shareInfo
             title = '2017 | 馆藏记忆 一一 ' + $('.not-share .data1').innerHTML + '的图书馆时光',
             desc = '欢迎来到2017广东工业大学图书馆毕业纪念册❤',
-            imgUrl = 'http://source.igdut.cn/1.4/login_logo.jpg';
+            imgUrl = 'http://source.igdut.cn/1.4/login_logo.png';
 
         wx.config({
             debug: false,
