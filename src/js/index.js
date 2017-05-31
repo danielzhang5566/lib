@@ -46,7 +46,6 @@ var God = {
                             console.log('遇到未知错误--' + data.code + data.msg);
                             break;
                     }
-                    ;
                     me.changeLoginBtn();
                 });
             });
@@ -67,15 +66,22 @@ var God = {
             if (sno[3] == '3') {
                 callback && callback(param);
             } else if (sno[3] == '6' || sno[3] == '5' || sno[3] == '4') {
-                me.showConfirm('本纪念册为毕业生而设计，您不是大四毕业生，确定要访问吗？', function (isLogin) {
-                    if (isLogin == true) {
-                        callback && callback(param);
-                    } else {
-                        console.log('非大四在读本科生用户取消了登录操作');
-                        me.changeLoginBtn();
-                        return false;
-                    }
-                });
+                if (me.showConfirm('本纪念册为毕业生而设计，您不是大四毕业生，确定要继续访问吗？')) {
+                    callback && callback(param);
+                } else {
+                    me.changeLoginBtn();
+                }
+
+                //me.showConfirm('本纪念册为毕业生而设计，您不是大四毕业生，确定要访问吗003？', function (isLogin) {
+                //    if (isLogin == true) {
+                //        callback && callback(param);
+                //    } else {
+                //        console.log('非大四在读本科生用户取消了登录操作');
+                //        me.changeLoginBtn();
+                //    }
+                //    return false;
+                //});
+
             } else {    //非在读本科生
                 me.showAlert('抱歉，本纪念册仅向在读本科生开放。');
                 me.changeLoginBtn();
@@ -97,6 +103,7 @@ var God = {
             $loginBtn.className = 'login-submit login-waiting';
             $loginBtn.setAttribute('value', '登录中...')
         }
+        return
     },
 
     //封装模拟触发事件
@@ -107,13 +114,24 @@ var God = {
         return !element.dispatchEvent(event);
     },
 
-    showAlert: function (str) {
-        window.alert(str);
+    showAlert: function (message) {
+        var iframe = document.createElement("IFRAME");
+        iframe.style.display = "none";
+        iframe.setAttribute("src", 'data:text/plain,');
+        document.documentElement.appendChild(iframe);
+        window.frames[0].window.alert(message);
+        iframe.parentNode.removeChild(iframe);
     },
 
-    showConfirm: function (str, callback) {
-        var isConfirm = window.confirm(str);
-        callback && callback(isConfirm);
+    showConfirm: function (message) {
+        var iframe = document.createElement("IFRAME");
+        iframe.style.display = "none";
+        iframe.setAttribute("src", 'data:text/plain,');
+        document.documentElement.appendChild(iframe);
+        var alertFrame = window.frames[0];
+        var result = alertFrame.window.confirm(message);
+        iframe.parentNode.removeChild(iframe);
+        return result;
     },
 
     /**

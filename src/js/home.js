@@ -547,13 +547,24 @@ var God = {
         return Array.prototype.slice.call(arrayLike, 0);
     },
 
-    showAlert: function (str) {
-        window.alert(str);
+    showAlert: function (message) {
+        var iframe = document.createElement("IFRAME");
+        iframe.style.display = "none";
+        iframe.setAttribute("src", 'data:text/plain,');
+        document.documentElement.appendChild(iframe);
+        window.frames[0].window.alert(message);
+        iframe.parentNode.removeChild(iframe);
     },
 
-    showConfirm: function (str, callback) {
-        var isConfirm = window.confirm(str);
-        callback && callback(isConfirm);
+    showConfirm: function (message) {
+        var iframe = document.createElement("IFRAME");
+        iframe.style.display = "none";
+        iframe.setAttribute("src", 'data:text/plain,');
+        document.documentElement.appendChild(iframe);
+        var alertFrame = window.frames[0];
+        var result = alertFrame.window.confirm(message);
+        iframe.parentNode.removeChild(iframe);
+        return result;
     },
 
     /**
