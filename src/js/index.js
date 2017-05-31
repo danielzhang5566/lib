@@ -22,7 +22,8 @@ var God = {
                         case -3:
                             //超出限制登录帐号(5个,不按次数,有效期2小时)
                             me.showAlert('您已经超过登录帐号限制，请稍后再登录~');
-                            console.log('超过登录帐号限制');
+                            //console.log('超过登录帐号限制');
+                            me.sendMsg('E3', 'beyondLogin')
                             break;
                         case -2:
                         case -1:
@@ -35,15 +36,16 @@ var God = {
                             break;
                         case 1:
                             console.log('登录成功');
-                            window.location.pathname = './home.html'
+                            window.location = './home.html'
                             break;
                         case 2:
                             me.showAlert('很遗憾，您大学期间未借过书，无法进入『馆藏记忆』~');
                             console.log('借书0本');
                             break;
                         default:
-                            me.showAlert('A1:出错啦~请稍后登录呗~');
-                            console.log('遇到未知错误--' + data.code + data.msg);
+                            me.showAlert('出错啦~请稍后登录呗~');
+                            //console.log('遇到未知错误--' + data.code + data.msg);
+                            me.sendMsg('E2', 'responseErr-201--' + data.code + data.msg)
                             break;
                     }
                     me.changeLoginBtn();
@@ -135,6 +137,28 @@ var God = {
     },
 
     /**
+     * 给服务器发送信息
+     * @param  {String}    type        信息类型
+     * @param  {String}    message     信息内容
+     * @return {Object}    无
+     */
+    sendMsg: function (type, message) {
+        var me = this,
+            param = 'cmd=log&info=' + type + ':' + message;
+
+        me.ajax('POST', param, './wechat.php', function (data) {
+            switch (data.code) {
+                case 1:
+                    console.log('发送信息成功');
+                    break;
+                default:
+                    console.log('发送信息失败,遇到未知错误--' + data.code + data.msg);
+                    break;
+            }
+        });
+    },
+
+    /**
      * 封装的ajax
      * @param  {String}    method    请求类型
      * @param  {String}    param     请求参数(没有请传null)
@@ -155,20 +179,23 @@ var God = {
                     try {
                         var data = JSON.parse(xhr.responseText);
                     } catch (e) {
-                        me.showAlert('Z1:系统出错,请联系管理员~');
-                        console.log('后台响应体不正常:' + xhr.responseText);
+                        me.showAlert('系统出错,请联系管理员~');
+                        //console.log('后台响应体出错:' + xhr.responseText);
+                        me.sendMsg('E4', 'responseTextErr-' + e.message);
+                        return
                     }
                     callback && callback(data);
                 } else {
-                    me.showAlert('A2:出错啦~请稍后登录呗~');
-                    console.log('There was a problem with the request--status code:' + xhr.status);
+                    me.showAlert('出错啦~请稍后登录呗~');
+                    //console.log('请求遇到错误--status code:' + xhr.status);
+                    me.sendMsg('E1', 'requestErr-101');
                     location.reload();
                 }
             }
         }
         xhr.onerror = function (e) {
-            me.showAlert('A3:出错啦~请稍后登录呗~');
-            console.log(e);
+            me.showAlert('出错啦~请稍后登录呗~');
+            me.sendMsg('E1', 'requestErr-102' + e.message);
             location.reload();
         };
 
