@@ -15,9 +15,12 @@ var God = {
             $sname = $('#sname');
 
         $loginBtn.addEventListener('touchstart', function (e) {
+            var no = $no.value.trim(),
+                name = $sname.value.trim();
+
             me.changeLoginBtn();
-            me.verify($no.value, $sname.value, function (param) {
-                me.ajax('POST', param, './easy.php', function (data) {
+            me.verify(no, name, function (param) {
+                me.ajax('POST', me.s(param, 'login', name, 'gdutlib'), './interface.php', function (data) {
                     switch (data.code) {
                         case -3:
                             //超出限制登录帐号(5个,不按次数,有效期2小时)
@@ -57,17 +60,15 @@ var God = {
     },
 
     verify: function (no, name, callback) {
-        var me = this,
-            sno = no.trim(),
-            sname = name.trim();
+        var me = this;
 
-        if ((/^\d{10}$/.test(sno)) && (/^[\u4e00-\u9fa5·•﹒]+$/.test(sname))) {
+        if ((/^\d{10}$/.test(no)) && (/^[\u4e00-\u9fa5·•﹒]+$/.test(name))) {
             console.log('check ok');
-            var param = 'uid=' + sno + '&name=' + sname + '&cmd=login';
+            var param = 'uid=' + no + '&name=' + name + '&cmd=login';
 
-            if (sno[3] == '3') {
+            if (no[3] == '3') {
                 callback && callback(param);
-            } else if (sno[3] == '6' || sno[3] == '5' || sno[3] == '4') {
+            } else if (no[3] == '6' || no[3] == '5' || no[3] == '4') {
                 if (me.showConfirm('本纪念册为毕业生而设计，您不是大四毕业生，确定要继续访问吗？')) {
                     callback && callback(param);
                 } else {
@@ -137,6 +138,19 @@ var God = {
     },
 
     /**
+     * 加密重构请求参数函数
+     * @param  {String}    param       原始参数
+     * @param  {String}    cmd         命令
+     * @param  {String}    name        姓名
+     * @param  {String}    str         约定密串
+     * @return {String}    重构后的参数
+     */
+    s: function (param, cmd, name, str) {
+        var secu = AK(cmd + name + str);
+        return (param + '&secu=' + secu);
+    },
+
+    /**
      * 给服务器发送信息
      * @param  {String}    type        信息类型
      * @param  {String}    message     信息内容
@@ -146,7 +160,7 @@ var God = {
         var me = this,
             param = 'cmd=log&info=' + type + ':' + message;
 
-        me.ajax('POST', param, './wechat.php', function (data) {
+        me.ajax('POST', param, './interface.php', function (data) {
             switch (data.code) {
                 case 1:
                     console.log('发送信息成功');
@@ -155,7 +169,7 @@ var God = {
                     console.log('发送信息失败,遇到未知错误--' + data.code + data.msg);
                     break;
             }
-        });
+        })
     },
 
     /**
@@ -177,12 +191,14 @@ var God = {
             if (xhr.readyState == 4) {
                 if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
                     try {
-                        var data = JSON.parse(xhr.responseText);
-                    } catch (e) {
+                        //var data = JSON.parse(xhr.responseText);
+                        //解码解析
+                        var data = JSON.parse(TK.de(xhr.responseText.slice(9)));
+                    } catch (err) {
                         me.showAlert('系统出错,请联系管理员~');
                         //console.log('后台响应体出错:' + xhr.responseText);
-                        me.sendMsg('E4', 'responseTextErr-' + e.message);
-                        return
+                        me.sendMsg('E4', 'responseTextErr-' + err.message);
+                        return false
                     }
                     callback && callback(data);
                 } else {

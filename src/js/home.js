@@ -152,7 +152,7 @@ var God = {
             }
             oneImg.onerror = function () {
                 console.log('图片并未成功加载');
-                me.sendMsg('E5','imgLoadErr');
+                me.sendMsg('E5', 'imgLoadErr');
                 me.showPage()
             }
         }
@@ -173,7 +173,7 @@ var God = {
             })
         } else {                                 //[B个人登录页面]
             $isShare.style.display = 'none';
-            me.ajax('POST', 'cmd=getinfo', './easy.php', function (data) {
+            me.ajax('POST', 'cmd=getinfo', './interface.php', function (data) {
                 switch (data.code) {
                     case 0:
                         me.showAlert('未能获取到信息，请返回重新登录。');
@@ -183,7 +183,6 @@ var God = {
                         console.log('获取信息成功');
                         //填数据
                         me.fillRequestData(data.msg, function (userInfo) {
-                            //回调执行微信操作
                             me.wechatAction(userInfo)
                         })
                         //如果需要判断用户类型,换成:
@@ -192,7 +191,8 @@ var God = {
                     default:
                         me.showAlert('出错啦~请稍后登录呗~');
                         //console.log('遇到未知错误--' + data.code + data.msg);
-                        me.sendMsg('E2','responseErr-211' + data.code + data.msg)
+                        me.sendMsg('E2', 'responseErr-211' + data.code + data.msg)
+                        window.location = './index.html'
                         break;
                 }
             });
@@ -392,12 +392,12 @@ var God = {
             urlUserInfoStr = window.location.href.split('?')[1].split('&')[0].split('=')[1];
 
         try {
-            //Base64解码
-            urlUserInfoStr = Base64.decode(urlUserInfoStr);
+            //TK解码
+            urlUserInfoStr = TK.de(urlUserInfoStr);
         } catch (e) {
             me.showAlert('分享链接失效，请返回重新登录~');
             //console.log('链接提取参数解码出错--' + e.message);
-            me.sendMsg('S5','shareInfoErr-611' + e.message);
+            me.sendMsg('S5', 'shareInfoErr-611' + e.message);
             window.location = './index.html'
         }
 
@@ -408,7 +408,7 @@ var God = {
             callback && callback(urlUserInfoArr);
         } else {
             me.showAlert('分享链接失效，请返回重新登录~');
-            me.sendMsg('S5','shareInfoErr-612');
+            me.sendMsg('S5', 'shareInfoErr-612');
             window.location = './index.html'
         }
     },
@@ -427,7 +427,7 @@ var God = {
 
         });
 
-        return '?share=' + Base64.encode(str);
+        return '?share=' + TK.en(str);
     },
 
     //执行微信分享操作
@@ -438,9 +438,9 @@ var God = {
         if (me.isWechat()) {
             console.log('微信内,开始执行分享设置');
             var url = window.location.href.split('#')[0],
-                param = 'cmd=wx&url=' + Base64.encode(url);
+                param = 'cmd=wx&url=' + TK.en(url);
 
-            me.ajax('POST', param, './wechat.php', function (data) {
+            me.ajax('POST', param, './interface.php', function (data) {
                 switch (data.code) {
                     case 1:
                         //传入微信分享配置和14个基础数据项
@@ -449,7 +449,7 @@ var God = {
                     default:
                         me.showAlert('设置分享内容失败,请稍后再试~');
                         //console.log('遇到未知错误--' + data.code + data.msg);
-                        me.sendMsg('E2','responseErr-212' + data.code + data.msg)
+                        me.sendMsg('E2', 'responseErr-212' + data.code + data.msg)
                         break;
                 }
             });
@@ -468,7 +468,7 @@ var God = {
         var me = this,
             url = window.location.href.split('?')[0] + me.setQueryString(userInfo),//拿到当前页面不带参数的url,再加上shareInfo
             title = '2017 | 馆藏记忆 一一 ' + $('.not-share .data1').innerHTML + '的图书馆时光',
-            desc = '欢迎来到2017广东工业大学图书馆毕业纪念册❤',
+            desc = '欢迎来到2017广东工业大学图书馆毕业纪念册',
             imgUrl = 'http://source.igdut.cn/1.4/login_logo.png';
 
         wx.config({
@@ -493,7 +493,7 @@ var God = {
                 success: function () {
                     // 用户确认分享后执行的回调函数
                     //console.log('分享成功')
-                    me.sendMsg('S1','onMenuShareTimeline')
+                    me.sendMsg('S1', 'onMenuShareTimeline')
                 },
                 cancel: function () {
                     // 用户取消分享后执行的回调函数
@@ -511,7 +511,7 @@ var God = {
                 success: function () {
                     // 用户确认分享后执行的回调函数
                     //console.log('分享成功')
-                    me.sendMsg('S2','onMenuShareAppMessage')
+                    me.sendMsg('S2', 'onMenuShareAppMessage')
                 },
                 cancel: function () {
                     // 用户取消分享后执行的回调函数
@@ -527,7 +527,7 @@ var God = {
                 success: function () {
                     // 用户确认分享后执行的回调函数
                     //console.log('分享成功')
-                    me.sendMsg('S3','onMenuShareQQ')
+                    me.sendMsg('S3', 'onMenuShareQQ')
                 },
                 cancel: function () {
                     // 用户取消分享后执行的回调函数
@@ -585,7 +585,7 @@ var God = {
         var me = this,
             param = 'cmd=log&info=' + type + ':' + message;
 
-        me.ajax('POST', param, './wechat.php', function (data) {
+        me.ajax('POST', param, './interface.php', function (data) {
             switch (data.code) {
                 case 1:
                     console.log('发送信息成功');
@@ -594,7 +594,7 @@ var God = {
                     console.log('发送信息失败,遇到未知错误--' + data.code + data.msg);
                     break;
             }
-        });
+        })
     },
 
     /**
@@ -616,12 +616,14 @@ var God = {
             if (xhr.readyState == 4) {
                 if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
                     try {
-                        var data = JSON.parse(xhr.responseText);
-                    } catch (e) {
+                        //var data = JSON.parse(xhr.responseText);
+                        //解码解析
+                        var data = JSON.parse(TK.de(xhr.responseText.slice(9)));
+                    } catch (err) {
                         me.showAlert('系统出错,请联系管理员~');
                         //console.log('后台响应体出错:' + xhr.responseText);
-                        me.sendMsg('E4', 'responseTextErr-' + e.message);
-                        return
+                        me.sendMsg('E4', 'responseTextErr-' + err.message);
+                        return false
                     }
                     callback && callback(data);
                 } else {
