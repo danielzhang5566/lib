@@ -129,7 +129,7 @@ var God = {
         var me = this,
             imgList = ['pg1_welcome.png', 'pg2_firsttime.png', 'pg3_firstbook.png', 'pg4_total.png', 'pg5_booklist_bottom.png', 'pg6_interest.png', 'pg7_lastbook.png', 'pg8_epilogue.png', 'pg9_final.png'];
 
-        var imgLocation = 'http://source.igdut.cn/1.4/',
+        var imgLocation = 'http://cdn.igdut.cn/1.4/',
         //imgLocation = window.location.origin + '/img/',
         //$pagination = $('.swiper-pagination-bullets'),
             successCount = 0,
@@ -173,7 +173,7 @@ var God = {
             })
         } else {                                 //[B个人登录页面]
             $isShare.style.display = 'none';
-            me.ajax('POST', 'cmd=getinfo', './interface.php', function (data) {
+            me.ajax('POST', 'cmd=getinfo', './api/interface.php', function (data) {
                 switch (data.code) {
                     case 0:
                         me.showAlert('未能获取到信息，请返回重新登录。');
@@ -440,7 +440,7 @@ var God = {
             var url = window.location.href.split('#')[0],
                 param = 'cmd=wx&url=' + TK.en(url);
 
-            me.ajax('POST', param, './interface.php', function (data) {
+            me.ajax('POST', param, './api/interface.php', function (data) {
                 switch (data.code) {
                     case 1:
                         //传入微信分享配置和14个基础数据项
@@ -469,7 +469,7 @@ var God = {
             url = window.location.href.split('?')[0] + me.setQueryString(userInfo),//拿到当前页面不带参数的url,再加上shareInfo
             title = '2017 | 馆藏记忆 一一 ' + $('.not-share .data1').innerHTML + '的图书馆时光',
             desc = '欢迎来到2017广东工业大学图书馆毕业纪念册',
-            imgUrl = 'http://source.igdut.cn/1.4/login_logo.png';
+            imgUrl = 'http://cdn.igdut.cn/1.4/login_logo.png';
 
         wx.config({
             debug: false,
@@ -585,7 +585,7 @@ var God = {
         var me = this,
             param = 'cmd=log&info=' + type + ':' + message;
 
-        me.ajax('POST', param, './interface.php', function (data) {
+        me.ajax('POST', param, './api/interface.php', function (data) {
             switch (data.code) {
                 case 1:
                     console.log('发送信息成功');

@@ -20,7 +20,7 @@ var God = {
 
             me.changeLoginBtn();
             me.verify(no, name, function (param) {
-                me.ajax('POST', me.s(param, 'login', name, 'gdutlib'), './interface.php', function (data) {
+                me.ajax('POST', me.s(param, 'login', name, 'gdutlib'), './api/interface.php', function (data) {
                     switch (data.code) {
                         case -3:
                             //超出限制登录帐号(5个,不按次数,有效期2小时)
@@ -160,7 +160,7 @@ var God = {
         var me = this,
             param = 'cmd=log&info=' + type + ':' + message;
 
-        me.ajax('POST', param, './interface.php', function (data) {
+        me.ajax('POST', param, './api/interface.php', function (data) {
             switch (data.code) {
                 case 1:
                     console.log('发送信息成功');
