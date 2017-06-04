@@ -129,7 +129,7 @@ var God = {
         var me = this,
             imgList = ['pg1_welcome.png', 'pg2_firsttime.png', 'pg3_firstbook.png', 'pg4_total.png', 'pg5_booklist_bottom.png', 'pg6_interest.png', 'pg7_lastbook.png', 'pg8_epilogue.png', 'pg9_final.png'];
 
-        var imgLocation = 'http://cdn.igdut.cn/1.4/',
+        var imgLocation = 'https://cdn.igdut.cn/1.4/',
         //imgLocation = window.location.origin + '/img/',
         //$pagination = $('.swiper-pagination-bullets'),
             successCount = 0,
@@ -469,7 +469,7 @@ var God = {
             url = window.location.href.split('?')[0] + me.setQueryString(userInfo),//拿到当前页面不带参数的url,再加上shareInfo
             title = '2017 | 馆藏记忆 一一 ' + $('.not-share .data1').innerHTML + '的图书馆时光',
             desc = '欢迎来到2017广东工业大学图书馆毕业纪念册',
-            imgUrl = 'http://cdn.igdut.cn/1.4/login_logo.png';
+            imgUrl = 'https://www.igdut.cn/img/login_logo.png';//为了防止触发cdn防盗链,这里url设为服务器
 
         wx.config({
             debug: false,
