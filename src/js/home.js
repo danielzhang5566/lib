@@ -156,7 +156,7 @@ var God = {
             }
             oneImg.onerror = function () {
                 console.log('图片并未成功加载');
-                me.sendMsg('E5', 'imgLoadErr');
+                me.sendMsg('E521', 'imgLoadErr');
                 me.showPage()
             }
         }
@@ -195,7 +195,7 @@ var God = {
                     default:
                         me.showAlert('出错啦~请稍后登录呗~');
                         //console.log('遇到未知错误--' + data.code + data.msg);
-                        me.sendMsg('E2', 'responseErr-211' + data.code + data.msg)
+                        me.sendMsg('E221', 'responseErr--' + data.code + data.msg)
                         window.location = './index.html'
                         break;
                 }
@@ -401,7 +401,7 @@ var God = {
         } catch (e) {
             me.showAlert('分享链接失效，请返回重新登录~');
             //console.log('链接提取参数解码出错--' + e.message);
-            me.sendMsg('S5', 'shareInfoErr-611' + e.message);
+            me.sendMsg('S521', 'shareInfoErr' + e.message);
             window.location = './index.html'
         }
 
@@ -412,7 +412,7 @@ var God = {
             callback && callback(urlUserInfoArr);
         } else {
             me.showAlert('分享链接失效，请返回重新登录~');
-            me.sendMsg('S5', 'shareInfoErr-612');
+            me.sendMsg('S522', 'shareInfoErr');
             window.location = './index.html'
         }
     },
@@ -453,7 +453,7 @@ var God = {
                     default:
                         me.showAlert('设置分享内容失败,请稍后再试~');
                         //console.log('遇到未知错误--' + data.code + data.msg);
-                        me.sendMsg('E2', 'responseErr-212' + data.code + data.msg)
+                        me.sendMsg('E221', 'responseErr' + data.code + data.msg)
                         break;
                 }
             });
@@ -497,7 +497,7 @@ var God = {
                 success: function () {
                     // 用户确认分享后执行的回调函数
                     //console.log('分享成功')
-                    me.sendMsg('S1', 'onMenuShareTimeline')
+                    me.sendMsg('S121', 'onMenuShareTimeline')
                 },
                 cancel: function () {
                     // 用户取消分享后执行的回调函数
@@ -515,7 +515,7 @@ var God = {
                 success: function () {
                     // 用户确认分享后执行的回调函数
                     //console.log('分享成功')
-                    me.sendMsg('S2', 'onMenuShareAppMessage')
+                    me.sendMsg('S221', 'onMenuShareAppMessage')
                 },
                 cancel: function () {
                     // 用户取消分享后执行的回调函数
@@ -531,7 +531,7 @@ var God = {
                 success: function () {
                     // 用户确认分享后执行的回调函数
                     //console.log('分享成功')
-                    me.sendMsg('S3', 'onMenuShareQQ')
+                    me.sendMsg('S321', 'onMenuShareQQ')
                 },
                 cancel: function () {
                     // 用户取消分享后执行的回调函数
@@ -543,7 +543,7 @@ var God = {
         wx.error(function (res) {
             me.showAlert('设置分享内容失败,请稍后再试~');
             //console.log('获取分享信息失败--' + res);
-            me.sendMsg('S4', 'wxConfigErr' + res)
+            me.sendMsg('S421', 'wxConfigErr' + res)
         });
     },
 
@@ -626,21 +626,21 @@ var God = {
                     } catch (err) {
                         me.showAlert('系统出错,请联系管理员~');
                         //console.log('后台响应体出错:' + xhr.responseText);
-                        me.sendMsg('E4', 'responseTextErr-' + err.message);
+                        me.sendMsg('E421', 'responseTextErr--' + err.message);
                         return false
                     }
                     callback && callback(data);
                 } else {
                     me.showAlert('出错啦~请稍后登录呗~');
                     //console.log('请求遇到错误--status code:' + xhr.status);
-                    me.sendMsg('E1', 'requestErr-101');
+                    me.sendMsg('E121', 'requestErr');
                     location.reload();
                 }
             }
         }
         xhr.onerror = function (e) {
             me.showAlert('出错啦~请稍后登录呗~');
-            me.sendMsg('E1', 'requestErr-102' + e.message);
+            me.sendMsg('E122', 'requestErr' + e.message);
             location.reload();
         };
 

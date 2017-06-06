@@ -6,6 +6,7 @@ require('../css/index.css')
 var God = {
     init: function () {
         this.initPage();
+        this.wechatAction();
     },
 
     initPage: function () {
@@ -26,7 +27,7 @@ var God = {
                             //超出限制登录帐号(5个,不按次数,有效期2小时)
                             me.showAlert('您已经超过登录帐号限制，请稍后再登录~');
                             //console.log('超过登录帐号限制');
-                            me.sendMsg('E3', 'beyondLogin')
+                            me.sendMsg('E311', 'beyondLogin')
                             break;
                         case -2:
                         case -1:
@@ -48,7 +49,7 @@ var God = {
                         default:
                             me.showAlert('出错啦~请稍后登录呗~');
                             //console.log('遇到未知错误--' + data.code + data.msg);
-                            me.sendMsg('E2', 'responseErr-201--' + data.code + data.msg)
+                            me.sendMsg('E211', 'responseErr--' + data.code + data.msg)
                             break;
                     }
                     me.changeLoginBtn();
@@ -107,6 +108,119 @@ var God = {
             $loginBtn.setAttribute('value', '登录中...')
         }
         return
+    },
+
+    //执行微信分享操作
+    //注意只有在[登录页]才会有这一步,[分享页]不进行分享设置
+    wechatAction: function () {
+        var me = this;
+
+        if (me.isWechat()) {
+            console.log('微信内,开始执行分享设置');
+            var url = 'https://www.igdut.cn/',
+                param = 'cmd=wx&url=' + TK.en(url);
+
+            me.ajax('POST', param, './api/interface.php', function (data) {
+                switch (data.code) {
+                    case 1:
+                        //传入微信分享配置和14个基础数据项
+                        me.setWechatConf(data.msg);
+                        break;
+                    default:
+                        me.showAlert('设置分享内容失败,请稍后再试~');
+                        //console.log('遇到未知错误--' + data.code + data.msg);
+                        me.sendMsg('E212', 'responseErr--' + data.code + data.msg)
+                        break;
+                }
+            });
+        }
+    },
+
+    isWechat: function () {
+        if ((navigator.userAgent.indexOf("MicroMessenger") >= 0) && window.wx) {
+            return true;
+        } else {
+            return false;
+        }
+    },
+
+    setWechatConf: function (conf) {
+        var me = this,
+            url = 'https://www.igdut.cn/',
+            title = '2017 | 馆藏记忆',
+            desc = '缤纷毕业季，青春不散场！欢迎来到图书馆2017届毕业纪念册“馆藏记忆”。',
+            imgUrl = 'https://www.igdut.cn/img/2.0/login_logo.png';//为了防止触发cdn防盗链,这里url设为服务器
+
+        wx.config({
+            debug: false,
+            appId: conf.appid,
+            timestamp: conf.timestamp,
+            nonceStr: conf.nonceStr,
+            signature: conf.signature,
+            jsApiList: [
+                'onMenuShareTimeline',   //分享到朋友圈
+                'onMenuShareAppMessage', //分享给朋友
+                'onMenuShareQQ'          //分享到QQ
+            ]
+        });
+
+        wx.ready(function () {
+            //分享到朋友圈
+            wx.onMenuShareTimeline({
+                title: title, // 分享标题
+                link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: imgUrl, // 分享图标
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    //console.log('分享成功')
+                    me.sendMsg('S111', 'onMenuShareTimeline')
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+
+            //分享给朋友
+            wx.onMenuShareAppMessage({
+                title: title, // 分享标题
+                desc: desc, // 分享描述
+                link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: imgUrl, // 分享图标
+                type: '', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    //console.log('分享成功')
+                    me.sendMsg('S211', 'onMenuShareAppMessage')
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+
+            //分享到QQ
+            wx.onMenuShareQQ({
+                title: title, // 分享标题
+                desc: desc, // 分享描述
+                link: url, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    //console.log('分享成功')
+                    me.sendMsg('S311', 'onMenuShareQQ')
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+
+        });
+
+        wx.error(function (res) {
+            me.showAlert('设置分享内容失败,请稍后再试~');
+            //console.log('获取分享信息失败--' + res);
+            me.sendMsg('S411', 'wxConfigErr--' + res)
+        });
     },
 
     //封装模拟触发事件
@@ -197,21 +311,21 @@ var God = {
                     } catch (err) {
                         me.showAlert('系统出错,请联系管理员~');
                         //console.log('后台响应体出错:' + xhr.responseText);
-                        me.sendMsg('E4', 'responseTextErr-' + err.message);
+                        me.sendMsg('E411', 'responseTextErr--' + err.message);
                         return false
                     }
                     callback && callback(data);
                 } else {
                     me.showAlert('出错啦~请稍后登录呗~');
                     //console.log('请求遇到错误--status code:' + xhr.status);
-                    me.sendMsg('E1', 'requestErr-101');
+                    me.sendMsg('E111', 'requestErr');
                     location.reload();
                 }
             }
         }
         xhr.onerror = function (e) {
             me.showAlert('出错啦~请稍后登录呗~');
-            me.sendMsg('E1', 'requestErr-102' + e.message);
+            me.sendMsg('E112', 'requestErr' + e.message);
             location.reload();
         };
 
