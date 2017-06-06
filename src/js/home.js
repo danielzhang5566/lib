@@ -26,28 +26,32 @@ var God = {
             speed: 400,
             direction: "vertical",
             //pagination: ".swiper-pagination",
-            onSlideChangeStart: function (swiper) {
 
-                //1.先把所有页面的文字隐藏
-                me.convertArray(document.querySelectorAll('.font-abc')).forEach(function (ele) {
-                    ele.style.display = 'none';
-                });
-
-                //2.然后滑到当前页面,文字显示
+            //切换屏幕结束
+            onSlideChangeEnd: function (swiper) {
+                //滑到当前页面,文字显示
                 if (swiper.slides[swiper.activeIndex].querySelector('.font-abc')) {
                     swiper.slides[swiper.activeIndex].querySelector('.font-abc').style.display = 'block';
                 }
 
+                //隐藏上一个页面的文字
+                if (swiper.slides[swiper.previousIndex].querySelector('.font-abc')) {
+                    swiper.slides[swiper.previousIndex].querySelector('.font-abc').style.display = 'none';
+                }
 
-                //滑到了第一页
-                if (swiper.activeIndex == 0) {
+
+                //A.针对[分享页]的情况
+                //滑到了第一页或者最后一页,隐藏'查看我的'按钮
+                if (swiper.activeIndex == 0 || swiper.activeIndex == swiper.slides.length - 1) {
                     $showMine.style.display = 'none'
                 }
-                //滑走第一页
-                if (swiper.activeIndex != 0) {
+                //滑走第一页或者最后一页,显示'查看我的'按钮
+                if (swiper.previousIndex == 0 || swiper.previousIndex == swiper.slides.length - 1) {
                     $showMine.style.display = 'block'
                 }
 
+
+                //B.针对[登录页]的情况
                 //滑到了第五页
                 if (swiper.activeIndex == 4) {
                     me.convertArray($('.borrowlist-container').querySelectorAll('.font-abc')).forEach(function (ele) {
@@ -55,7 +59,7 @@ var God = {
                     });
                 }
                 //滑走第五页
-                if (swiper.activeIndex != 4) {
+                if (swiper.previousIndex == 4) {
                     me.convertArray($('.borrowlist-container').querySelectorAll('.font-abc')).forEach(function (ele) {
                         ele.style.display = 'none';
                     });
@@ -65,7 +69,7 @@ var God = {
 
         //点击[查看我的]
         $showMine.addEventListener('touchstart', function () {
-            window.location = './home.html'
+            window.location = './index.html'
         });
 
         //点击[再看一遍]
@@ -129,7 +133,7 @@ var God = {
         var me = this,
             imgList = ['pg1_welcome.png', 'pg2_firsttime.png', 'pg3_firstbook.png', 'pg4_total.png', 'pg5_booklist_bottom.png', 'pg6_interest.png', 'pg7_lastbook.png', 'pg8_epilogue.png', 'pg9_final.png'];
 
-        var imgLocation = 'https://cdn.igdut.cn/1.4/',
+        var imgLocation = '../img/2.0/',
         //imgLocation = window.location.origin + '/img/',
         //$pagination = $('.swiper-pagination-bullets'),
             successCount = 0,
@@ -468,8 +472,8 @@ var God = {
         var me = this,
             url = window.location.href.split('?')[0] + me.setQueryString(userInfo),//拿到当前页面不带参数的url,再加上shareInfo
             title = '2017 | 馆藏记忆 一一 ' + $('.not-share .data1').innerHTML + '的图书馆时光',
-            desc = '欢迎来到2017广东工业大学图书馆毕业纪念册',
-            imgUrl = 'https://www.igdut.cn/img/login_logo.png';//为了防止触发cdn防盗链,这里url设为服务器
+            desc = '缤纷毕业季，青春不散场！欢迎来到图书馆2017届毕业纪念册“馆藏记忆”。',
+            imgUrl = 'https://www.igdut.cn/img/2.0/login_logo.png';//为了防止触发cdn防盗链,这里url设为服务器
 
         wx.config({
             debug: false,
