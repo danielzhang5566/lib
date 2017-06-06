@@ -117,7 +117,7 @@ var God = {
 
         if (me.isWechat()) {
             console.log('微信内,开始执行分享设置');
-            var url = 'https://www.igdut.cn/',
+            var url = window.location.href.split('#')[0],//注意这里的url要带上参数,否则无法通过微信验证
                 param = 'cmd=wx&url=' + TK.en(url);
 
             me.ajax('POST', param, './api/interface.php', function (data) {
