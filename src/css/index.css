@@ -109,7 +109,7 @@ input[type="button"], input[type="submit"], input[type="reset"] {
 /* 为home.html预加载字体(全平台兼容) */
 @font-face {
     font-family: abc;
-    src: url('../font/zhanku.ttf') format('truetype');
+    src: url('https://cdn.igdut.cn/zhanku.ttf') format('truetype');
 }
 
 .font-abc {

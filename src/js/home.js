@@ -133,7 +133,7 @@ var God = {
         var me = this,
             imgList = ['pg1_welcome.png', 'pg2_firsttime.png', 'pg3_firstbook.png', 'pg4_total.png', 'pg5_booklist_bottom.png', 'pg6_interest.png', 'pg7_lastbook.png', 'pg8_epilogue.png', 'pg9_final.png'];
 
-        var imgLocation = '../img/2.0/',
+        var imgLocation = 'https://cdn.igdut.cn/2.0/',
         //imgLocation = window.location.origin + '/img/',
         //$pagination = $('.swiper-pagination-bullets'),
             successCount = 0,
@@ -184,7 +184,7 @@ var God = {
                         window.location = './index.html'
                         break;
                     case 1:
-                        console.log('获取信息成功');
+                        //console.log('获取信息成功');
                         //填数据
                         me.fillRequestData(data.msg, function (userInfo) {
                             me.wechatAction(userInfo)
@@ -193,7 +193,7 @@ var God = {
                         //userType(data.msg);
                         break;
                     default:
-                        me.showAlert('出错啦~请稍后登录呗~');
+                        me.showAlert('出错啦~请联系管理员hi@iGDUT.cn~');
                         //console.log('遇到未知错误--' + data.code + data.msg);
                         me.sendMsg('E221', 'responseErr--' + data.code + data.msg)
                         window.location = './index.html'
@@ -364,7 +364,7 @@ var God = {
             me.convertArray(document.querySelectorAll('.slide1')).forEach(function (ele) {
                 ele.setAttribute('class', ele.getAttribute('class').replace(' swiper-no-swiping', ''));
             });
-        }, 1000)
+        }, 2000)
     },
 
     music: function () {
@@ -440,7 +440,7 @@ var God = {
         var me = this;
 
         if (me.isWechat()) {
-            console.log('微信内,开始执行分享设置');
+            //console.log('微信内,开始执行分享设置');
             var url = window.location.href.split('#')[0],
                 param = 'cmd=wx&url=' + TK.en(url);
 
@@ -451,7 +451,7 @@ var God = {
                         me.setWechatConf(data.msg, userInfo);
                         break;
                     default:
-                        me.showAlert('设置分享内容失败,请稍后再试~');
+                        me.showAlert('设置分享内容失败,请联系管理员hi@iGDUT.cn~');
                         //console.log('遇到未知错误--' + data.code + data.msg);
                         me.sendMsg('E221', 'responseErr' + data.code + data.msg)
                         break;
@@ -473,7 +473,7 @@ var God = {
             url = window.location.href.split('?')[0] + me.setQueryString(userInfo),//拿到当前页面不带参数的url,再加上shareInfo
             title = '2017 | 馆藏记忆 一一 ' + $('.not-share .data1').innerHTML + '的图书馆时光',
             desc = '缤纷毕业季，青春不散场！欢迎来到图书馆2017届毕业纪念册“馆藏记忆”。',
-            imgUrl = 'https://www.igdut.cn/img/2.0/login_logo.png';//为了防止触发cdn防盗链,这里url设为服务器
+            imgUrl = 'https://www.igdut.cn/img/2.0/login_logo.jpg';//为了防止触发cdn防盗链,这里url设为服务器
 
         wx.config({
             debug: false,
@@ -541,7 +541,7 @@ var God = {
         });
 
         wx.error(function (res) {
-            me.showAlert('设置分享内容失败,请稍后再试~');
+            me.showAlert('设置分享内容失败,请联系管理员hi@iGDUT.cn~');
             //console.log('获取分享信息失败--' + res);
             me.sendMsg('S421', 'wxConfigErr' + res)
         });
@@ -624,14 +624,14 @@ var God = {
                         //解码解析
                         var data = JSON.parse(TK.de(xhr.responseText.slice(9)));
                     } catch (err) {
-                        me.showAlert('系统出错,请联系管理员~');
+                        me.showAlert('系统出错,请联系管理员hi@iGDUT.cn~');
                         //console.log('后台响应体出错:' + xhr.responseText);
                         me.sendMsg('E421', 'responseTextErr--' + err.message);
                         return false
                     }
                     callback && callback(data);
                 } else {
-                    me.showAlert('出错啦~请稍后登录呗~');
+                    me.showAlert('出错啦~请联系管理员hi@iGDUT.cn~');
                     //console.log('请求遇到错误--status code:' + xhr.status);
                     me.sendMsg('E121', 'requestErr');
                     location.reload();
@@ -639,7 +639,7 @@ var God = {
             }
         }
         xhr.onerror = function (e) {
-            me.showAlert('出错啦~请稍后登录呗~');
+            me.showAlert('出错啦~请联系管理员hi@iGDUT.cn~');
             me.sendMsg('E122', 'requestErr' + e.message);
             location.reload();
         };

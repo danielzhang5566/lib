@@ -32,22 +32,22 @@ var God = {
                         case -2:
                         case -1:
                             me.showAlert('您的输入有误，请检查后重新输入~');
-                            console.log('输入或请求有误');
+                            //console.log('输入或请求有误');
                             break;
                         case 0:
                             me.showAlert('您输入的姓名或学号有误，请重新输入~');
-                            console.log('姓名与学号不对应');
+                            //console.log('姓名与学号不对应');
                             break;
                         case 1:
-                            console.log('登录成功');
+                            //console.log('登录成功');
                             window.location = './home.html'
                             break;
                         case 2:
                             me.showAlert('很遗憾，您大学期间未借过书，无法进入『馆藏记忆』~');
-                            console.log('借书0本');
+                            //console.log('借书0本');
                             break;
                         default:
-                            me.showAlert('出错啦~请稍后登录呗~');
+                            me.showAlert('出错啦~请联系管理员hi@iGDUT.cn~');
                             //console.log('遇到未知错误--' + data.code + data.msg);
                             me.sendMsg('E211', 'responseErr--' + data.code + data.msg)
                             break;
@@ -116,7 +116,7 @@ var God = {
         var me = this;
 
         if (me.isWechat()) {
-            console.log('微信内,开始执行分享设置');
+            //console.log('微信内,开始执行分享设置');
             var url = window.location.href.split('#')[0],//注意这里的url要带上参数,否则无法通过微信验证
                 param = 'cmd=wx&url=' + TK.en(url);
 
@@ -127,7 +127,8 @@ var God = {
                         me.setWechatConf(data.msg);
                         break;
                     default:
-                        me.showAlert('设置分享内容失败,请稍后再试~');
+                        //me.showAlert('设置分享内容失败,请稍后再试~');
+                        console.log('设置分享内容失败,请稍后再试~');
                         //console.log('遇到未知错误--' + data.code + data.msg);
                         me.sendMsg('E212', 'responseErr--' + data.code + data.msg)
                         break;
@@ -149,7 +150,7 @@ var God = {
             url = 'https://www.igdut.cn/',
             title = '2017 | 馆藏记忆',
             desc = '缤纷毕业季，青春不散场！欢迎来到图书馆2017届毕业纪念册“馆藏记忆”。',
-            imgUrl = 'https://www.igdut.cn/img/2.0/login_logo.png';//为了防止触发cdn防盗链,这里url设为服务器
+            imgUrl = 'https://www.igdut.cn/img/2.0/login_logo.jpg';//为了防止触发cdn防盗链,这里url设为服务器
 
         wx.config({
             debug: false,
@@ -217,7 +218,7 @@ var God = {
         });
 
         wx.error(function (res) {
-            me.showAlert('设置分享内容失败,请稍后再试~');
+            console.log('设置分享内容失败,请稍后再试~');
             //console.log('获取分享信息失败--' + res);
             me.sendMsg('S411', 'wxConfigErr--' + res)
         });
@@ -309,14 +310,14 @@ var God = {
                         //解码解析
                         var data = JSON.parse(TK.de(xhr.responseText.slice(9)));
                     } catch (err) {
-                        me.showAlert('系统出错,请联系管理员~');
+                        me.showAlert('系统出错,请联系管理员hi@iGDUT.cn~');
                         //console.log('后台响应体出错:' + xhr.responseText);
                         me.sendMsg('E411', 'responseTextErr--' + err.message);
                         return false
                     }
                     callback && callback(data);
                 } else {
-                    me.showAlert('出错啦~请稍后登录呗~');
+                    me.showAlert('出错啦~请联系管理员hi@iGDUT.cn~');
                     //console.log('请求遇到错误--status code:' + xhr.status);
                     me.sendMsg('E111', 'requestErr');
                     location.reload();
@@ -324,7 +325,7 @@ var God = {
             }
         }
         xhr.onerror = function (e) {
-            me.showAlert('出错啦~请稍后登录呗~');
+            me.showAlert('出错啦~请联系管理员hi@iGDUT.cn~');
             me.sendMsg('E112', 'requestErr' + e.message);
             location.reload();
         };
