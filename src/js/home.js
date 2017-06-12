@@ -274,11 +274,11 @@ var God = {
                 //每个分页开始计数的书的编号
                 var start = (i - 1) * 10 + 1;
 
-                if (charCounts[i - 1] < 80) {            //0-79     书名几乎都是一行,用大字号 font-big
+                if (charCounts[i - 1] < 200) {            //0-79     书名几乎都是一行,用大字号 font-big
                     html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books font-big'>");
-                } else if (charCounts[i - 1] < 120) {     //80-119   书名部分两行,用默认中字号
+                } else if (charCounts[i - 1] < 310) {     //80-119   书名部分两行,用默认中字号
                     html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books'>");
-                } else if (charCounts[i - 1] < 190) {     //120-189  书名平均两行,用小字号 font-small
+                } else if (charCounts[i - 1] < 400) {     //120-189  书名平均两行,用小字号 font-small
                     html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books font-small'>");
                 } else {                                 //190-     书名平均三行以上,用特小字号 font-very-small
                     html += ("<div class='swiper-slide h-slide h-slide" + i + "'><ul class='font-abc font-borrowlist-books font-very-small'>");
@@ -451,7 +451,7 @@ var God = {
                         me.setWechatConf(data.msg, userInfo);
                         break;
                     default:
-                        me.showAlert('设置分享内容失败,请联系管理员hi@iGDUT.cn~');
+                        me.showAlert('设置分享内容失败,您可以直接截屏分享或者稍后登录~');
                         //console.log('遇到未知错误--' + data.code + data.msg);
                         me.sendMsg('E221', 'responseErr' + data.code + data.msg)
                         break;
@@ -541,7 +541,7 @@ var God = {
         });
 
         wx.error(function (res) {
-            me.showAlert('设置分享内容失败,请联系管理员hi@iGDUT.cn~');
+            me.showAlert('设置分享内容失败,您可以直接截屏分享或者稍后登录~');
             //console.log('获取分享信息失败--' + res);
             me.sendMsg('S421', 'wxConfigErr' + res)
         });

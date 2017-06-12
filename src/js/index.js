@@ -25,7 +25,7 @@ var God = {
                     switch (data.code) {
                         case -3:
                             //超出限制登录帐号(5个,不按次数,有效期2小时)
-                            me.showAlert('您已经超过登录帐号限制，请稍后再登录~');
+                            me.showAlert('您已经超过登录帐号限制，请稍后再登录~ (如有误伤,请联系管理员hi@iGDUT.cn~)');
                             //console.log('超过登录帐号限制');
                             me.sendMsg('E311', 'beyondLogin')
                             break;
@@ -87,7 +87,7 @@ var God = {
                 //});
 
             } else {    //非在读本科生
-                me.showAlert('抱歉，本纪念册仅向在读本科生开放。');
+                me.showAlert('抱歉，本纪念册仅向在读本科生开放。(如有错漏,请联系管理员hi@iGDUT.cn~)');
                 me.changeLoginBtn();
             }
 
